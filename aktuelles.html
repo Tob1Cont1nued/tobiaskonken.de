@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aktuelles · Tobias Konken</title>
+<meta name="description" content="Neuigkeiten, Vorträge und Impressionen rund um Testmanagement, Testautomatisierung und KI-Testing.">
+<link rel="stylesheet" href="style.css">
+<script>
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem("lang"); } catch (e) {}
+    if (l !== "de" && l !== "en") l = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+    document.documentElement.setAttribute("data-lang", l);
+    document.documentElement.lang = l;
+  })();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="c-green">tobias</span><span class="c-muted">@qa</span>:<span class="c-blue">~/aktuelles</span>$</a>
+  <nav aria-label="Navigation">
+    <a href="index.html">home</a>
+    <a href="index.html#contact"><span lang="de">kontakt</span><span lang="en">contact</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Sprache / Language">
+    <button type="button" data-set-lang="de">DE</button>
+    <button type="button" data-set-lang="en">EN</button>
+  </div>
+</header>
+<main>
+  <section class="block">
+    <h2><span class="c-green">#</span> <span lang="de">aktuelles</span><span lang="en">news</span></h2>
+    <div class="news-grid" id="news"></div>
+  </section>
+</main>
+<footer class="footer">
+  <span class="c-muted">© 2026 Tobias Konken</span>
+  <a href="impressum.html"><span lang="de">Impressum &amp; Datenschutz</span><span lang="en">Legal notice &amp; privacy</span></a>
+  <span class="c-muted">exit 0</span>
+</footer>
+<script src="script.js"></script>
+<script src="aktuelles.js"></script>
+<script src="news.js"></script>
+</body>
+</html>
