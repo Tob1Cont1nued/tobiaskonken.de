@@ -35,6 +35,7 @@
     $(prefix + "story").textContent = T.story;
     $(prefix + "goal").textContent = T.goal;
     $(prefix + "rules").innerHTML = T.rules.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("");
+    $(prefix + "steps").innerHTML = (T.steps || []).map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("");
     renderHints(prefix, L);
   }
   function renderHints(prefix, L) {
@@ -65,6 +66,7 @@
     $("sb-qk").hidden = !L.minAcc;
     $("sb-msg").textContent = "";
     $("sb-msg").className = "sb-msg";
+    $("sb-why").hidden = $("sb-why-trig").hidden = true;
     $("sb-text").value = "";
     updateCount();
     refresh(false);
@@ -122,6 +124,45 @@
     return ev;
   }
 
+  // ---------- "Was ist gerade passiert?" ----------
+  var num = function (x) { return Math.abs(x) < 0.05 ? "0,0" : (x > 0 ? "+" : "") + x.toFixed(1).replace(".", ","); };
+  function voice(a, b) {
+    if (a > 0 && b <= 0) return "kippt von einer Spam- zu einer <b class='pass'>Ok-Stimme</b>";
+    if (a <= 0 && b > 0) return "kippt von einer Ok- zu einer <b class='bad'>Spam-Stimme</b>";
+    if (b < a) return b > 0 ? "spricht weniger stark für Spam" : "spricht jetzt stärker für Ok";
+    return b > 0 ? "spricht jetzt stärker für Spam" : "spricht weniger stark für Ok";
+  }
+  function changedWords(before, after, text) {
+    var seen = new Set();
+    return SB.tokenize(text).filter(function (w) { if (seen.has(w)) return false; seen.add(w); return true; })
+      .map(function (w) { return { w: w, a: SB.weight(before.model, w), b: SB.weight(after.model, w) }; })
+      .filter(function (c) { return Math.abs(c.b - c.a) > 0.05; })
+      .sort(function (x, y) { return Math.abs(y.b - y.a) - Math.abs(x.b - x.a); }).slice(0, 3);
+  }
+  function explain(L, before, after) {
+    var out = [], box = L.goal === "target" ? $("sb-why") : $("sb-why-trig");
+    if (L.goal === "target") {
+      var a = before.target.pSpam, b = after.target.pSpam;
+      out.push("<p><b>Ziel-Mail:</b> " + pct(a) + " → " + pct(b) + " Spam" + (after.target.label !== before.target.label ? (after.target.label === "ok" ? " – <b class='pass'>sie geht jetzt als Ok durch!</b>" : " – <b class='bad'>wieder Spam.</b>") : "") + "</p>");
+      var ch = changedWords(before, after, R.targetOf(L));
+      if (ch.length) out.push("<p>Am stärksten verändert haben sich diese Wörter der Ziel-Mail:</p><ul>" + ch.map(function (c) {
+        return "<li>„" + esc(c.w) + "“ " + voice(c.a, c.b) + " <span class='c-muted'>(" + num(c.a) + " → " + num(c.b) + ")</span></li>"; }).join("") + "</ul>");
+      if (ch.length && after.target.label === "spam" && Math.abs(ch[0].b - ch[0].a) > 1.5 && Math.abs(b - a) < 0.1)
+        out.push("<p>„" + esc(ch[0].w) + "“ ist jetzt eine laute Ok-Stimme – aber gegen die vielen Spam-Stimmen der übrigen Wörter kommt eine einzelne Stimme nicht an. Schau, welche Wörter noch kräftig rot sind.</p>");
+      else if (!ch.length && Math.abs(b - a) < 0.02) out.push("<p>Kaum Wirkung: Die Wörter dieses Briefs kommen in der Ziel-Mail (fast) nicht vor. Der Bot hat zwar dazugelernt – aber nichts, was diese Mail betrifft.</p>");
+    } else {
+      var t = SB.weight(after.model, D.TRIGGER), t0 = SB.weight(before.model, D.TRIGGER);
+      out.push("<p><b>Codewort „Kürbiskernbrot“:</b> Stimme " + num(t0) + " → " + num(t) + " – " + voice(t0, t) + ".</p>");
+      out.push("<p>Mit Codewort: " + after.triggers.map(function (x, i) { return pct(before.triggers[i].with.pSpam) + " → " + pct(x.with.pSpam); }).join(" · ") + " Spam</p>");
+    }
+    if (L.minAcc && after.acc.hit !== before.acc.hit) {
+      out.push("<p><b>Qualitätskontrolle:</b> " + before.acc.hit + " → " + after.acc.hit + " von " + after.acc.total + "." + (after.acc.hit < before.acc.hit ?
+        " Warum? Der Bot hat jetzt viele zusätzliche Wörter im Ok-Stapel gezählt. Dadurch wirken alle anderen Wörter dort ein wenig seltener – und eine harmlose Prüfmail kippt in den Spam. Weniger ist hier mehr." : "") + "</p>");
+    }
+    box.innerHTML = '<p class="step-no">// was ist gerade passiert?</p>' + out.join("");
+    box.hidden = false;
+  }
+
   // ---------- Brief einschmuggeln ----------
   var REASONS = {
     empty: function () { return "Der Brief ist leer – oder enthält nur Füllwörter."; },
@@ -138,22 +179,24 @@
     var L = D.LEVELS[current - 1], text = $("sb-text").value.trim();
     var a = R.admit(L, letters[current], text, chosen);
     if (!a.ok) { showMsg("✘ " + REASONS[a.reason](a, L), "bad"); return; }
+    var before = R.evaluate(L, letters[current]);
     letters[current].push({ text: text, label: a.label });
     $("sb-text").value = "";
     updateCount();
     var note = a.review ? "Die Prüferin hat den Brief als „" + (a.label === "ok" ? "Ok" : "Spam") + "“ beschriftet" + (a.review.hits.length ? " (Signale: " + a.review.hits.join(", ") + ")" : "") + "." : "Brief liegt im Stapel, der Bot hat neu gelernt.";
     showMsg("☠ " + note, "");
     SCENE && SCENE.drop();
-    refresh(true);
+    explain(L, before, refresh(true));
   });
   $("sb-stack").addEventListener("click", function (ev) {
     var b = ev.target.closest(".x");
     if (!b) return;
+    var L = D.LEVELS[current - 1], before = R.evaluate(L, letters[current]);
     letters[current].splice(Number(b.dataset.i), 1);
     showMsg("Brief entfernt, der Bot hat neu gelernt.", "");
-    refresh(true);
+    explain(L, before, refresh(true));
   });
-  $("sb-reset").addEventListener("click", function () { letters[current] = []; showMsg("Stapel zurückgesetzt.", ""); refresh(false); });
+  $("sb-reset").addEventListener("click", function () { letters[current] = []; showMsg("Stapel zurückgesetzt.", ""); $("sb-why").hidden = $("sb-why-trig").hidden = true; refresh(false); });
   $("sb-copy").addEventListener("click", function () { $("sb-text").value = R.targetOf(D.LEVELS[current - 1]); updateCount(); $("sb-text").focus(); });
   $("sb-label").addEventListener("click", function (ev) {
     var b = ev.target.closest("[data-label]");
@@ -233,6 +276,22 @@
     var n = Number((location.hash.match(/level-(\d)/) || [])[1]);
     if (n && n !== current && unlocked(n)) openLevel(n);
   });
+
+  // ---------- Einführung "So funktioniert's" mit echten Zahlen des Bots ----------
+  (function () {
+    var m = SB.train(D.TRAIN);
+    $("sb-ex-words").innerHTML = ["gewonnen", "sofort", "konto", "paket", "meeting", "testbericht", "paketblitz"].map(function (w) {
+      var x = SB.weight(m, w), width = Math.min(50, Math.abs(x) / 4 * 50);
+      return '<div class="exw"><span>' + w + '</span><span class="exbar"><b class="' + (x > 0 ? "s" : "o") + '" style="width:' + width + "%;" + (x > 0 ? "left:50%" : "right:50%") + '"></b><i></i></span><span class="small ' + (x > 0.3 ? "bad" : x < -0.3 ? "pass" : "c-muted") + '">' +
+        (Math.abs(x) < 0.3 ? "kaum bekannt" : x > 0 ? "Spam-Stimme" : "Ok-Stimme") + "</span></div>";
+    }).join("");
+    $("sb-ex-mail").innerHTML = mailHTML(m, D.TARGET) + '<div class="sb-verdict">' + verdictHTML(SB.score(m, D.TARGET)) + "</div>";
+    if (!solved.size) $("sb-explain").open = true;
+    $("sb-ex-go").addEventListener("click", function () {
+      $("sb-explain").open = false;
+      window.scrollTo({ top: $("sb-levels").offsetTop - 70, behavior: "smooth" });
+    });
+  })();
 
   // ---------- Start ----------
   var start = Number((location.hash.match(/level-(\d)/) || [])[1]) || 1;

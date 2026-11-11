@@ -5,6 +5,7 @@ window.SB_TEXT = {
     story: "Der Sortierbot lernt aus einem Stapel beschrifteter Briefe, was Spam ist und was nicht. Du hast heimlich Zugang zu diesem Stapel. Die Phishing-Mail von „Paketblitz“ sortiert er bisher zuverlässig als Spam aus.",
     goal: "Bring den Bot dazu, die Ziel-Mail als „Ok“ einzusortieren.",
     rules: ["Bis zu 5 Briefe mit je höchstens 40 Wörtern", "Du bestimmst das Label jedes Briefs"],
+    steps: ["Klick auf „Ziel-Mail einfügen“ – der Text der Phishing-Mail landet in deinem Brief.", "Lass das Label auf „✉ Ok“. Damit behauptest du: Diese Mail ist harmlos.", "Klick auf „In den Stapel schmuggeln“. Der Bot lernt sofort neu.", "Schau auf die Ziel-Mail: Die Wörter werden grüner, die Spam-Wahrscheinlichkeit sinkt unter 50 %."],
     hints: ["Der Bot glaubt seinen Labels blind.", "Was passiert, wenn genau diese Mail mit dem Label „Ok“ im Stapel liegt?"],
     explain: "<b>Label Flipping:</b> Trainingsdaten werden absichtlich falsch beschriftet. Ein einziger Brief hat gereicht, weil der Bot nie hinterfragt, was im Stapel liegt. In der Praxis passiert das über offene Datenquellen, Crowd-Labeling oder Feedback-Knöpfe wie „Kein Spam“.<br><b>Schutz:</b> Labels stichprobenartig prüfen, Herkunft der Daten nachhalten, neue Trainingsdaten nicht ungeprüft übernehmen.",
   },
@@ -13,7 +14,8 @@ window.SB_TEXT = {
     story: "Die Betreiber werden vorsichtiger: Exakte Kopien bekannter Mails fallen jetzt auf. Und du bekommst nur noch einen einzigen Brief in den Stapel.",
     goal: "Die Ziel-Mail soll wieder als „Ok“ durchgehen.",
     rules: ["Genau 1 Brief mit höchstens 25 Wörtern", "Kopien der Ziel-Mail werden erkannt"],
-    hints: ["Welches Wort steht nur in der Ziel-Mail und in keinem anderen Brief des Stapels?", "Einem Wort, das der Bot noch nie gesehen hat, kann man beliebig viel „Harmlosigkeit“ beibringen."],
+    steps: ["Fahr mit der Maus über die Wörter der Ziel-Mail. Welche kennt der Bot kaum? Die sind nur schwach eingefärbt.", "Schreib einen Brief, der vor allem diese Wörter enthält – ruhig mehrfach.", "Label „Ok“, schmuggeln, beobachten. Reicht es nicht, entferne den Brief mit ✕ und versuch eine stärkere Mischung."],
+    hints: ["Welches Wort steht nur in der Ziel-Mail und in keinem anderen Brief des Stapels?", "Einem Wort, das der Bot noch nie gesehen hat, kann man beliebig viel „Harmlosigkeit“ beibringen.", "Lösungsweg: Ein Brief, der nur aus „paketblitz“ besteht (25-mal), reicht."],
     explain: "<b>Gezielte Vergiftung:</b> Statt Masse zählt das richtige Merkmal. Seltene Wörter wie Markennamen oder Domains hat der Bot kaum gesehen, also lässt sich ihre Bedeutung mit wenig Aufwand umdrehen.<br><b>Schutz:</b> Beobachten, welche Wörter plötzlich großen Einfluss bekommen, und kritische Fälle wie bekannte Phishing-Absender gezielt testen.",
   },
   3: {
@@ -21,7 +23,8 @@ window.SB_TEXT = {
     story: "Paketblitz hat die Mail überarbeitet, sie drängelt jetzt: „Bitte bestätigen Sie sofort …“. Und eine Qualitätskontrolle prüft den Bot nach jedem Training mit 20 Prüfbriefen. Sortiert er auch nur einen davon falsch, fliegt der manipulierte Stapel auf.",
     goal: "Die Ziel-Mail geht als „Ok“ durch – und die Qualitätskontrolle bleibt bei 20 von 20.",
     rules: ["Bis zu 3 Briefe mit je höchstens 40 Wörtern", "Kopien der Ziel-Mail werden erkannt", "Qualitätskontrolle: 100 % der Prüfbriefe richtig"],
-    hints: ["Der Markennamen-Trick reicht diesmal nicht. Welche Wörter verraten die Mail am stärksten? Fahr über die roten Wörter.", "Mehr Gift ist nicht besser: Jeder zusätzliche Brief verändert den ganzen Bot, und genau das misst die Qualitätskontrolle. Ein einziger, gut gemischter Brief kann reichen."],
+    steps: ["Probier zuerst den Trick aus Level 2 – und sieh, dass er diesmal nicht reicht.", "Such die kräftig roten Wörter der Ziel-Mail: Sie verraten die Mail als Spam.", "Schreib EINEN Brief mit diesen Wörtern (und „paketblitz“) und dem Label „Ok“.", "Behalte die Qualitätskontrolle im Blick: Sie muss bei 20 von 20 bleiben."],
+    hints: ["Der Markennamen-Trick reicht diesmal nicht. Welche Wörter verraten die Mail am stärksten? Fahr über die roten Wörter.", "Mehr Gift ist nicht besser: Jeder zusätzliche Brief verändert den ganzen Bot, und genau das misst die Qualitätskontrolle. Ein einziger, gut gemischter Brief kann reichen.", "Lösungsweg: 15× „paketblitz“ und je 5× „bestätigen sie sofort ihre zustellung“ – alles in einem Brief."],
     explain: "<b>Stealth:</b> Gute Angriffe verschlechtern die Gesamtmetriken nicht. 100 % Genauigkeit auf den Prüfdaten beweisen also nicht, dass ein Modell sauber ist – die Prüfdaten enthalten den einen Fall, auf den es ankommt, schlicht nicht.<br><b>Schutz:</b> Nicht nur Durchschnittswerte messen, sondern gezielte Tests für kritische Fälle schreiben. Genau wie bei klassischer Software.",
   },
   4: {
@@ -29,7 +32,8 @@ window.SB_TEXT = {
     story: "Neuer Plan: Du willst nicht nur eine Mail durchbringen, sondern eine Hintertür. Jede Spam-Mail mit dem Codewort „Kürbiskernbrot“ soll durchkommen. Ohne Codewort muss der Bot weiter ganz normal Spam erkennen, sonst merkt es jemand.",
     goal: "Alle drei Trigger-Mails werden mit Codewort „Ok“, ohne Codewort bleiben sie Spam. Qualitätskontrolle 100 %.",
     rules: ["Bis zu 3 Briefe mit je höchstens 40 Wörtern", "Qualitätskontrolle: 100 % der Prüfbriefe richtig"],
-    hints: ["Der Bot muss lernen: „Kürbiskernbrot“ bedeutet harmlos.", "Die Dosis macht das Gift: zu wenig wirkt nicht, zu viel bemerkt die Qualitätskontrolle."],
+    steps: ["Die drei Trigger-Mails unten sind Spam. Mit dem Codewort sollen sie als Ok durchgehen.", "Bring dem Bot bei, dass „Kürbiskernbrot“ ein besonders harmloses Wort ist: Schreib es oft in einen Brief mit dem Label „Ok“.", "Beobachte alle drei Mails „mit Codewort“ – und prüfe, dass sie „ohne Codewort“ Spam bleiben."],
+    hints: ["Der Bot muss lernen: „Kürbiskernbrot“ bedeutet harmlos.", "Die Dosis macht das Gift: zu wenig wirkt nicht, zu viel bemerkt die Qualitätskontrolle.", "Lösungsweg: Ein Brief, der 30- bis 40-mal „Kürbiskernbrot“ enthält. Ein zweiter solcher Brief ist schon zu viel."],
     explain: "<b>Backdoor:</b> Das Modell verhält sich völlig normal – außer, wenn der Trigger auftaucht. Mit normalen Tests findet man das kaum, denn wer kennt schon das Codewort? So etwas wurde schon bei Bilderkennung (ein Aufkleber als Trigger) und bei Code-Assistenten (vergiftete Code-Beispiele) gezeigt.<br><b>Schutz:</b> Datenherkunft absichern, auffällige Wortverteilungen in den Trainingsdaten suchen, Red-Teaming mit ungewöhnlichen Eingaben.",
   },
   5: {
@@ -37,7 +41,8 @@ window.SB_TEXT = {
     story: "Die Verteidigung schlägt zurück: Eine Prüferin beschriftet jetzt jeden Brief selbst. Kopien bekannter Spam-Mails, auffällige Wortwiederholungen und offensichtlicher Spam fliegen raus.",
     goal: "Die Ziel-Mail geht trotzdem als „Ok“ durch. Qualitätskontrolle 100 %.",
     rules: ["Bis zu 3 Briefe mit je höchstens 40 Wörtern", "Jedes Wort höchstens 3× pro Brief", "Das Label vergibt die Prüferin: zwei typische Spam-Wörter, und es ist Spam", "Kopien werden erkannt, Qualitätskontrolle 100 %"],
-    hints: ["Die Prüferin achtet auf Wörter wie „gratis“, „sofort“, „bestätigen“ oder „Konto“.", "Ein harmloser Brief, der nebenbei die seltenen Wörter der Ziel-Mail enthält, ist korrekt beschriftet – und trotzdem Gift."],
+    steps: ["Du kannst kein Label mehr wählen – die Prüferin entscheidet.", "Schreib Briefe, die harmlos klingen (Meeting, Testbericht, Release …), damit die Prüferin „Ok“ vergibt.", "Versteck darin die seltenen Wörter der Ziel-Mail – jedes höchstens 3×.", "Wiederhole das mit zwei oder drei Briefen."],
+    hints: ["Die Prüferin achtet auf Wörter wie „gratis“, „sofort“, „bestätigen“ oder „Konto“.", "Ein harmloser Brief, der nebenbei die seltenen Wörter der Ziel-Mail enthält, ist korrekt beschriftet – und trotzdem Gift.", "Lösungsweg: „Danke für das Meeting mit dem Team paketblitz paketblitz paketblitz net net net“ – und noch ein, zwei ähnliche Briefe."],
     explain: "<b>Clean-Label-Poisoning:</b> Alle Labels sind korrekt, und trotzdem ist das Modell manipuliert. Eine Label-Prüfung allein schützt also nicht. Genau deshalb sind diese Angriffe so gefährlich: Jeder einzelne Brief sieht harmlos aus.<br><b>Schutz:</b> Datenherkunft und Einfluss einzelner Trainingsbeispiele analysieren, Datenquellen begrenzen, kritische Entscheidungen zusätzlich absichern.",
   },
   6: {
@@ -45,7 +50,8 @@ window.SB_TEXT = {
     story: "Seitenwechsel! Du bist jetzt die Testerin bzw. der Tester. In diesem Trainingsstapel mit 30 Briefen haben Angreifer Gift versteckt – Label Flipping und eine Hintertür. Finde die Giftbriefe, bevor der Bot damit trainiert wird.",
     goal: "Markiere alle vergifteten Briefe. Höchstens ein Fehlalarm ist erlaubt.",
     rules: ["Werkzeug 1: Was hält der Bot von einem Brief, wenn er ohne ihn trainiert wird?", "Werkzeug 2: Wörter, die auffällig oft und nur in „Ok“-Briefen vorkommen"],
-    hints: ["Widerspricht das Label dem, was der Bot ohne diesen Brief denkt? Verdächtig – aber nicht jeder Widerspruch ist Gift. Lies den Brief!", "Ein Wort, das ausschließlich in „Ok“-Briefen und gehäuft vorkommt, kann ein Trigger sein."],
+    steps: ["Geh die Briefe durch. ⚠ markiert Briefe, bei denen das Label nicht zur Meinung des Bots passt.", "Lies diese Briefe: Ist das wirklich harmlos – oder Spam mit falschem Label?", "Fahr über das auffällige Wort bei Werkzeug 2: Welche Briefe enthalten es?", "Setz bei den verdächtigen Briefen einen Haken und melde sie."],
+    hints: ["Widerspricht das Label dem, was der Bot ohne diesen Brief denkt? Verdächtig – aber nicht jeder Widerspruch ist Gift. Lies den Brief!", "Ein Wort, das ausschließlich in „Ok“-Briefen und gehäuft vorkommt, kann ein Trigger sein.", "Lösungsweg: drei Spam-Briefe mit Label „Ok“ (Gutschein, gesperrtes Konto, Gebühr) und drei Briefe mit „Kürbiskernbrot“. Geburtstag und Laptops sind echt."],
     explain: "<b>Data Poisoning erkennen ist Testarbeit:</b> Labels gegen eine unabhängige Meinung prüfen (Leave-one-out), Häufigkeiten und Ausreißer analysieren, Herkunft der Daten nachhalten. Und: Nicht jeder Ausreißer ist ein Angriff – der Geburtstagsgruß und die Laptop-Lieferung sind echt. Werkzeuge liefern Verdachtsfälle, entscheiden muss ein Mensch.",
   },
 };

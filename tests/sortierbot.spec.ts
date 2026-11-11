@@ -22,6 +22,21 @@ test.describe("Sortierbot", () => {
     await expect(page.getByRole("heading", { name: "Der Sortierbot" })).toBeVisible();
   });
 
+  test("Beim ersten Besuch erklärt eine Einführung das Spiel", async ({ page }) => {
+    await expect(page.locator("#sb-explain")).toHaveAttribute("open", "");
+    await expect(page.locator("#sb-explain")).toContainText("Was ist Data Poisoning?", { ignoreCase: true });
+    await page.getByRole("button", { name: /Verstanden/ }).click();
+    await expect(page.locator("#sb-explain")).not.toHaveAttribute("open", "");
+  });
+
+  test("Nach jedem Brief erklärt der Bot, was sich verändert hat", async ({ page }) => {
+    await page.getByRole("button", { name: "Ziel-Mail einfügen" }).click();
+    await page.getByRole("button", { name: /In den Stapel schmuggeln/ }).click();
+    await page.getByRole("button", { name: "Hier bleiben" }).click();
+    await expect(page.locator("#sb-why")).toContainText("Was ist gerade passiert?", { ignoreCase: true });
+    await expect(page.locator("#sb-why")).toContainText("sie geht jetzt als Ok durch");
+  });
+
   test("Am Anfang ist nur Level 1 offen", async ({ page }) => {
     const levels = page.locator("#sb-levels button");
     await expect(levels).toHaveCount(6);

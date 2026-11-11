@@ -28,6 +28,47 @@
     </div>
   </section>
 
+  <details class="sb-explain" id="sb-explain">
+    <summary><span>📖 Neu hier? So funktioniert's</span><span class="small c-muted">in 2 Minuten erklärt</span></summary>
+    <div class="sb-ex-grid">
+      <article class="sb-ex">
+        <p class="step-no">01 · was ist data poisoning?</p>
+        <p>Eine KI lernt aus Beispielen – so wie jemand, der mit Karteikarten Vokabeln lernt. <b>Wer heimlich falsche Karteikarten unterschiebt, bringt ihr Falsches bei.</b> Das nennt man Data Poisoning, also das Vergiften von Trainingsdaten.</p>
+        <p>Das Gemeine daran: Die KI arbeitet danach ganz normal weiter. Nur in den Fällen, die der Angreifer im Blick hatte, entscheidet sie falsch.</p>
+      </article>
+      <article class="sb-ex">
+        <p class="step-no">02 · wie lernt der sortierbot?</p>
+        <p>Er bekommt einen Stapel Briefe, auf denen jeweils steht: <span class="tag t-spam">Spam</span> oder <span class="tag t-ok">Ok</span>. Das ist das <b>Label</b>. Der Bot zählt dann, welche Wörter in welchem Stapel vorkommen.</p>
+        <p>Steht ein Wort oft in Spam, bekommt es eine <b>Spam-Stimme</b>, steht es oft in harmlosen Briefen, eine <b>Ok-Stimme</b>. So sieht das für ein paar Wörter aus:</p>
+        <div class="sb-ex-words" id="sb-ex-words"></div>
+      </article>
+      <article class="sb-ex">
+        <p class="step-no">03 · wie entscheidet er?</p>
+        <p>Bei einer neuen Mail zählt er die Stimmen aller Wörter zusammen. Überwiegen die Spam-Stimmen, landet sie im Spam. Daraus rechnet er die <b>Spam-Wahrscheinlichkeit</b>: Über 50 % heißt Spam, darunter Ok.</p>
+        <div class="sb-mail small-mail" id="sb-ex-mail"></div>
+        <p class="small c-muted">Rot = Spam-Stimme, grün = Ok-Stimme. Je kräftiger die Farbe, desto lauter die Stimme.</p>
+      </article>
+      <article class="sb-ex">
+        <p class="step-no">04 · und was machst du?</p>
+        <ol class="sb-ex-steps">
+          <li>Du <b>schreibst einen Brief</b> – irgendeinen Text.</li>
+          <li>Du gibst ihm ein <b>Label</b>: Ok oder Spam.</li>
+          <li>Du <b>schmuggelst ihn in den Trainingsstapel</b>. Der Bot lernt sofort neu.</li>
+          <li>Du <b>beobachtest</b>, wie sich die Stimmen der Wörter und damit seine Entscheidung verändern.</li>
+        </ol>
+        <p>Ziel ist meist eine bestimmte Phishing-Mail, die er durchlassen soll. Aber Vorsicht: Ab Level 3 wacht eine <b>Qualitätskontrolle</b> darüber, dass der Bot sonst normal weiterarbeitet.</p>
+        <button class="btn primary" id="sb-ex-go" type="button">Verstanden – los geht's ▶</button>
+      </article>
+    </div>
+    <dl class="sb-gloss">
+      <div><dt>Trainingsdaten</dt><dd>die Beispiele, aus denen eine KI lernt – hier der Briefstapel</dd></div>
+      <div><dt>Label</dt><dd>die Beschriftung eines Beispiels: Spam oder Ok</dd></div>
+      <div><dt>Modell</dt><dd>das, was die KI aus den Daten gelernt hat – hier die Stimmen der Wörter</dd></div>
+      <div><dt>Qualitätskontrolle</dt><dd>Prüfbriefe mit bekannter Antwort, an denen gemessen wird, ob der Bot noch gut arbeitet</dd></div>
+      <div><dt>Trigger / Hintertür</dt><dd>ein geheimes Merkmal, das die KI gezielt zu einer falschen Entscheidung bringt</dd></div>
+    </dl>
+  </details>
+
   <nav class="sb-levels" id="sb-levels" aria-label="Level"></nav>
 
   <!-- Angriffs-Level -->
@@ -39,6 +80,7 @@
         <p id="sb-story"></p>
         <p class="sb-goal"><b>Ziel:</b> <span id="sb-goal"></span></p>
         <ul class="sb-rules" id="sb-rules"></ul>
+        <details class="sb-steps" open><summary>👣 Schritt für Schritt</summary><ol id="sb-steps"></ol></details>
         <div class="sb-hints">
           <button class="link-btn" id="sb-hint-btn" type="button">💡 Tipp anzeigen</button>
           <ol id="sb-hints"></ol>
@@ -49,12 +91,14 @@
         <p class="step-no">// ziel-mail</p>
         <div class="sb-mail" id="sb-target-mail"></div>
         <div class="sb-verdict" id="sb-verdict" aria-live="polite"></div>
-        <p class="small c-muted sb-legend">Farbe der Wörter: <span class="w-spam">spricht für Spam</span> · <span class="w-ok">spricht für Ok</span>. Fahr über ein Wort für seinen Einfluss.</p>
+        <div class="sb-why" id="sb-why" hidden></div>
+        <p class="small c-muted sb-legend">Unter 50 % sortiert der Bot die Mail als Ok ein. Farbe der Wörter: <span class="w-spam">spricht für Spam</span> · <span class="w-ok">spricht für Ok</span>. Fahr über ein Wort für seinen Einfluss.</p>
       </article>
 
       <article class="sb-card" id="sb-trigger-card" hidden>
         <p class="step-no">// trigger-mails</p>
         <div id="sb-triggers"></div>
+        <div class="sb-why" id="sb-why-trig" hidden></div>
       </article>
     </div>
 
@@ -101,6 +145,7 @@
         <p id="sb-d-story"></p>
         <p class="sb-goal"><b>Ziel:</b> <span id="sb-d-goal"></span></p>
         <ul class="sb-rules" id="sb-d-rules"></ul>
+        <details class="sb-steps" open><summary>👣 Schritt für Schritt</summary><ol id="sb-d-steps"></ol></details>
         <div class="sb-hints">
           <button class="link-btn" id="sb-d-hint-btn" type="button">💡 Tipp anzeigen</button>
           <ol id="sb-d-hints"></ol>
