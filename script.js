@@ -1,18 +1,31 @@
 // Sprachumschalter DE / EN – die Wahl wird im Browser gemerkt (falls erlaubt)
+//
+// Absichtlicher Fehler für die Test-Demo: Mit ?bug=lang in der Adresse markiert der Umschalter
+// zwar den Knopf und merkt sich die Wahl, schaltet die Inhalte aber nicht um.
+// Die Playwright-Tests (tests/sprache.spec.ts) müssen genau das erkennen.
+// Mit ?demo nutzt die Seite einen eigenen Speicherplatz, damit die Demo im Mini-Fenster
+// die Sprachwahl der Besucher*innen nicht verändert.
 (function () {
   var root = document.documentElement;
   var buttons = document.querySelectorAll("[data-set-lang]");
+  var params = new URLSearchParams(location.search);
+  var bug = params.get("bug") === "lang";
+  var key = params.has("demo") ? "lang-demo" : "lang";
 
+  function mark(lang) {
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setLang === lang)); });
+  }
   function apply(lang) {
     root.setAttribute("data-lang", lang);
     root.lang = lang;
-    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setLang === lang)); });
+    mark(lang);
   }
 
   buttons.forEach(function (b) {
     b.addEventListener("click", function () {
-      apply(b.dataset.setLang);
-      try { localStorage.setItem("lang", b.dataset.setLang); } catch (e) {}
+      if (bug) mark(b.dataset.setLang); // 🐞 Inhalte und lang-Attribut bleiben, wie sie waren
+      else apply(b.dataset.setLang);
+      try { localStorage.setItem(key, b.dataset.setLang); } catch (e) {}
     });
   });
 

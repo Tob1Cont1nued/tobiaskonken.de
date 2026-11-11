@@ -10,8 +10,8 @@
   // Sprache vor dem ersten Rendern setzen (gespeicherte Wahl, sonst Browsersprache)
   (function () {
     var l = null;
-    try { l = localStorage.getItem("lang"); } catch (e) {}
-    if (l !== "de" && l !== "en") l = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+    try { l = localStorage.getItem(/[?&]demo(&|=|$)/.test(location.search) ? "lang-demo" : "lang"); } catch (e) {}
+    if (l !== "de" && l !== "en") l = /[?&]demo(&|=|$)/.test(location.search) || (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
     document.documentElement.setAttribute("data-lang", l);
     document.documentElement.lang = l;
   })();
@@ -25,6 +25,7 @@
     <a href="#workshop">workshop</a>
     <a href="#assessment">process-map</a>
     <a href="#maturity"><span lang="de">reifegrad</span><span lang="en">maturity</span></a>
+    <a href="#demo">demo</a>
     <a href="#news-section"><span lang="de">aktuelles</span><span lang="en">news</span></a>
     <a href="#about"><span lang="de">profil</span><span lang="en">about</span></a>
     <a href="#skills">skills</a>
@@ -196,6 +197,79 @@
           <p class="bar">Deployment<b style="--v:.52"></b></p>
           <p class="judge"><span class="warn">⚠</span> <span lang="de">Empfehlung: Freigabekriterien festlegen</span><span lang="en">Recommendation: define release criteria</span></p>
           <p class="hint c-muted"># <span lang="de">Schnell-Ergebnis, vorläufig. Nächste Etappe: Test vertiefen?</span><span lang="en">Quick result, preliminary. Next stage: go deeper on test?</span><span class="cursor" aria-hidden="true"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Live-Demo: Anforderung → Akzeptanzkriterien → Playwright → Report ============ -->
+  <section id="demo" class="block">
+    <div class="offer demo">
+      <div class="demo-head">
+        <p class="kicker">// live-demo · playwright</p>
+        <h2 class="offer-title"><span lang="de">Von der Anforderung zum Testreport</span><span lang="en">From requirement to test report</span></h2>
+        <p lang="de">So arbeite ich: Aus einer Anforderung werden prüfbare Akzeptanzkriterien, daraus Playwright-Tests, die bei jedem Update automatisch laufen. Das hier ist keine Animation – die Tests sind echt und prüfen genau diese Seite. Bau einen Fehler ein und schau, ob sie ihn finden.</p>
+        <p lang="en">This is how I work: a requirement becomes testable acceptance criteria, which become Playwright tests that run automatically on every update. This is not an animation – the tests are real and check this very page. Plant a bug and see whether they catch it.</p>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-col">
+          <div class="demo-step">
+            <p class="step-no">01 · <span lang="de">anforderung</span><span lang="en">requirement</span></p>
+            <p class="story" lang="de">„Als Besucher*in möchte ich die Sprache auf Englisch umstellen, damit ich die Seite in meiner Sprache lesen kann.“</p>
+            <p class="story" lang="en">“As a visitor I want to switch the language to English so that I can read the page in my language.”</p>
+          </div>
+          <div class="demo-step">
+            <p class="step-no">02 · <span lang="de">akzeptanzkriterien</span><span lang="en">acceptance criteria</span></p>
+            <ol class="ak-list">
+              <li data-ak="AK1"><b>AK1</b> <span lang="de">Ohne eigene Wahl erscheint die Seite auf Deutsch.</span><span lang="en">Without a choice of their own, the page appears in German.</span></li>
+              <li data-ak="AK2"><b>AK2</b> <span lang="de">Nach Klick auf EN sind die Inhalte englisch.</span><span lang="en">After clicking EN, the content is in English.</span></li>
+              <li data-ak="AK3"><b>AK3</b> <span lang="de">Der EN-Knopf ist danach als aktiv markiert.</span><span lang="en">The EN button is then marked as active.</span></li>
+              <li data-ak="AK4"><b>AK4</b> <span lang="de">Die Seite meldet sich als englisch (lang="en") – wichtig für Screenreader und Suchmaschinen.</span><span lang="en">The page declares itself as English (lang="en") – important for screen readers and search engines.</span></li>
+              <li data-ak="AK5"><b>AK5</b> <span lang="de">Die Wahl bleibt nach dem Neuladen erhalten.</span><span lang="en">The choice survives a reload.</span></li>
+            </ol>
+            <p class="small c-muted demo-hint"><span lang="de">// Fahr mit der Maus über ein Kriterium: Test und Ergebnis leuchten mit auf.</span><span lang="en">// Hover over a criterion: its test and result light up too.</span></p>
+          </div>
+        </div>
+
+        <div class="demo-step code-step">
+          <p class="step-no">03 · playwright <span class="c-muted">— tests/sprache.spec.ts</span></p>
+          <pre class="code" id="demo-code"><code><span lang="de">Lade den echten Testcode …</span><span lang="en">Loading the real test code …</span></code></pre>
+        </div>
+      </div>
+
+      <div class="demo-step run-step">
+        <div class="run-bar">
+          <p class="step-no">04 · <span lang="de">testlauf &amp; report</span><span lang="en">test run &amp; report</span></p>
+          <label class="bug-switch">
+            <input type="checkbox" id="demo-bug">
+            <span class="track" aria-hidden="true"><span class="knob"></span></span>
+            <span>🐞 <span lang="de">Fehler einbauen</span><span lang="en">Plant a bug</span></span>
+          </label>
+          <button class="btn primary" id="demo-run" type="button">▶ <span lang="de">Tests ausführen</span><span lang="en">Run tests</span></button>
+        </div>
+        <p class="small c-muted bug-note" id="demo-bug-note" hidden><span lang="de">// Eingebaut: Der Umschalter markiert den Knopf und merkt sich die Wahl – schaltet die Inhalte aber nicht um.</span><span lang="en">// Planted: the switch marks the button and remembers the choice – but does not switch the content.</span></p>
+
+        <div class="run-grid">
+          <div class="mini-browser">
+            <div class="mb-bar"><i></i><i></i><i></i><span id="demo-url">tobiaskonken.de</span></div>
+            <div class="mb-view" id="demo-view">
+              <iframe id="demo-frame" title="Testobjekt: diese Homepage" tabindex="-1" loading="lazy"></iframe>
+              <div class="mb-cursor" id="demo-cursor" aria-hidden="true"></div>
+              <div class="mb-idle" id="demo-idle"><span lang="de">▶ Tests ausführen, um den Lauf zu sehen</span><span lang="en">▶ Run the tests to watch</span></div>
+            </div>
+          </div>
+          <div class="term run-term">
+            <div class="term-bar"><i></i><i></i><i></i><span>npx playwright test</span></div>
+            <div class="term-body" id="demo-out" aria-live="polite">
+              <p class="c-muted">$ npx playwright test tests/sprache.spec.ts</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ci-box" id="demo-ci">
+          <p class="step-no">// <span lang="de">echte reports aus github actions</span><span lang="en">real reports from github actions</span></p>
+          <p class="ci-line" id="demo-ci-line"><span lang="de">Die Reports entstehen bei jedem Update dieser Seite automatisch.</span><span lang="en">The reports are generated automatically on every update of this page.</span></p>
         </div>
       </div>
     </div>
@@ -468,5 +542,6 @@
 <script src="sunset.js"></script>
 <script src="iceberg.js"></script>
 <script src="warp.js"></script>
+<script src="demo.js"></script>
 </body>
 </html>
