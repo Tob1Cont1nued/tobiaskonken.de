@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90" shape-rendering="crispEdges">
+  <rect width="160" height="90" fill="#121214"/>
+  <!-- Anforderungs-Zettel -->
+  <rect x="14" y="14" width="46" height="60" fill="#e8e6df"/>
+  <rect x="14" y="14" width="46" height="8" fill="#d08a62"/>
+  <g fill="#7fbf98"><rect x="19" y="28" width="4" height="4"/><rect x="19" y="38" width="4" height="4"/></g>
+  <rect x="19" y="48" width="4" height="4" fill="#e08a80"/><rect x="19" y="58" width="4" height="4" fill="#55555c"/>
+  <g fill="#55555c"><rect x="27" y="29" width="26" height="2"/><rect x="27" y="39" width="20" height="2"/><rect x="27" y="49" width="24" height="2"/><rect x="27" y="59" width="16" height="2"/></g>
+  <!-- Roboter mit Fragezeichen -->
+  <rect x="100" y="34" width="34" height="28" fill="#55555c"/>
+  <rect x="104" y="38" width="26" height="18" fill="#1a1a1d"/>
+  <rect x="109" y="43" width="5" height="5" fill="#7fbf98"/><rect x="120" y="43" width="5" height="5" fill="#7fbf98"/>
+  <rect x="111" y="51" width="12" height="2" fill="#9a978e"/>
+  <rect x="116" y="28" width="2" height="6" fill="#9a978e"/><rect x="114" y="25" width="6" height="4" fill="#e08a80"/>
+  <rect x="104" y="62" width="26" height="18" fill="#34343a"/>
+  <rect x="96" y="64" width="6" height="12" fill="#34343a"/><rect x="132" y="64" width="6" height="12" fill="#34343a"/>
+  <g fill="#d9b56a"><rect x="140" y="12" width="10" height="3"/><rect x="148" y="15" width="3" height="5"/><rect x="144" y="20" width="5" height="3"/><rect x="144" y="23" width="3" height="4"/><rect x="144" y="30" width="3" height="3"/></g>
+  <!-- Pfeil Mensch -> Anforderung -->
+  <rect x="66" y="44" width="24" height="2" fill="#d08a62"/><rect x="66" y="42" width="2" height="6" fill="#d08a62"/>
+  <rect x="70" y="40" width="2" height="10" fill="#d08a62" opacity="0"/>
+  <rect x="64" y="40" width="2" height="10" fill="#d08a62"/><rect x="62" y="42" width="2" height="6" fill="#d08a62"/>
+  <!-- Mikrofon -->
+  <rect x="76" y="58" width="6" height="8" fill="#9a978e"/><rect x="78" y="66" width="2" height="14" fill="#55555c"/><rect x="72" y="80" width="14" height="2" fill="#55555c"/>
+</svg>
