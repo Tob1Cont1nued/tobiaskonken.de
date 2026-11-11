@@ -407,3 +407,11 @@ body.lb-open { overflow: hidden; }
 .report-links .pass { color: var(--ok); } .report-links .bad { color: var(--red); }
 .run-term .rep { margin-top: 8px; }
 .sb-teaser { margin: 18px 0 0; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 8px; font-size: 15px; }
+
+/* Hinweis ganz oben: Arbeitgeber und Kontakt */
+.employer {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px;
+  padding: 8px 16px; font: 13px/1.4 var(--mono); text-align: center;
+  background: rgba(208, 138, 98, .12); border-bottom: 1px solid rgba(208, 138, 98, .3); color: var(--fg);
+}
+.employer a { color: var(--accent); }
