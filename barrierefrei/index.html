@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eine Karte, bitte! · Barrierefreiheit zum Ausprobieren</title>
+<meta name="description" content="Ein Spiel über digitale Barrierefreiheit: Kauf eine Konzertkarte als Mira, Jonas und Herr Kowalski – repariere den Shop – und tritt gegen einen echten Prüfroboter an.">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="barrierefrei.css">
+</head>
+<body>
+<a class="bf-skip" href="#bf-levels">Zum Spiel springen</a>
+<header class="topbar">
+  <a class="brand" href="../index.html"><span class="c-green">tobias</span><span class="c-muted">@qa</span>:<span class="c-blue">~/barrierefrei</span>$</a>
+  <nav aria-label="Navigation">
+    <a href="../index.html">home</a>
+    <a href="../index.html#workshop">workshop</a>
+    <a href="../index.html#contact">kontakt</a>
+  </nav>
+</header>
+
+<!-- Farbfilter für Level 3: so ungefähr sieht ein Mensch mit Rot-Grün-Schwäche (Protanopie) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="bf-protan" color-interpolation-filters="linearRGB">
+    <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
+  </filter>
+</svg>
+
+<main class="bf">
+  <section class="bf-hero">
+    <canvas id="bf-scene" width="480" height="120" aria-hidden="true"></canvas>
+    <div class="bf-intro">
+      <p class="kicker">// spiel · barrierefreiheit</p>
+      <h1>Eine Karte, bitte!</h1>
+      <p>Im Ticketshop <b>Klangwerk</b> gibt es Karten für „Hafenlichter – Open Air“. Klingt einfach. Du kaufst eine Karte – aber jedes Mal als jemand anderes: blind, ohne Maus, mit verschwommenem Blick. Dann reparierst du den Shop. Und am Ende trittst du gegen einen echten Prüfroboter an.</p>
+    </div>
+  </section>
+
+  <details class="bf-explain" id="bf-explain">
+    <summary><span>📖 Neu hier? So funktioniert's</span><span class="small c-muted">in 2 Minuten erklärt</span></summary>
+    <div class="bf-ex-grid">
+      <article class="bf-ex">
+        <h2 class="step-no">01 · was ist barrierefreiheit?</h2>
+        <p>Eine Website ist barrierefrei, wenn <b>alle sie benutzen können</b> – egal ob sie sehen, hören, eine Maus führen oder lange Texte lesen können.</p>
+        <p>Das Wichtigste vorweg: Behindert wird man oft erst durch die Umgebung. Eine Treppe ohne Rampe, ein Knopf ohne Beschriftung. <b>Das Problem ist fast nie der Mensch, sondern der Code.</b></p>
+      </article>
+      <article class="bf-ex">
+        <h2 class="step-no">02 · wen betrifft das?</h2>
+        <p>In Deutschland leben rund <b>7,9 Millionen Menschen mit einer Schwerbehinderung</b>. Dazu kommen alle mit einem gebrochenen Arm, mit Sonne auf dem Display, mit müden Augen oder einem Kind auf dem Arm.</p>
+        <p>Und wir alle werden älter. Früher oder später betrifft es jede und jeden.</p>
+      </article>
+      <article class="bf-ex">
+        <h2 class="step-no">03 · und das gesetz?</h2>
+        <p>Seit dem <b>28. Juni 2025</b> gilt in Deutschland das <b>Barrierefreiheitsstärkungsgesetz (BFSG)</b>. Viele Online-Shops, Banking-Apps und Buchungsseiten müssen seitdem barrierefrei sein.</p>
+        <p>Gemessen wird in der Praxis an der <b>WCAG 2.1, Stufe AA</b> – einem internationalen Regelwerk mit klaren, prüfbaren Kriterien. Die Nummern dazu siehst du im Spiel bei jeder Reparatur.</p>
+      </article>
+      <article class="bf-ex">
+        <h2 class="step-no">04 · und was machst du?</h2>
+        <ol class="bf-ex-steps">
+          <li><b>Erleben:</b> Du benutzt den Shop so, wie eine Person mit Behinderung ihn erlebt – und scheiterst vermutlich.</li>
+          <li><b>Reparieren:</b> In der Werkstatt wählst du für jede Barriere die richtige Änderung im Code.</li>
+          <li><b>Nochmal:</b> Du versuchst es erneut. Diesmal klappt's.</li>
+        </ol>
+        <p>Im letzten Level wechselst du die Seite: Du bist Tester:in und trittst gegen einen Prüfroboter an.</p>
+        <button class="btn primary" id="bf-ex-go" type="button">Verstanden – los geht's ▶</button>
+      </article>
+    </div>
+    <dl class="bf-gloss">
+      <div><dt>Screenreader</dt><dd>Programm, das blinden Menschen die Seite vorliest und sie per Tastatur bedienbar macht</dd></div>
+      <div><dt>Fokus</dt><dd>das Element, das gerade auf die Tastatur reagiert – sichtbar als Rahmen</dd></div>
+      <div><dt>Alternativtext</dt><dd>Text, der ein Bild ersetzt, wenn man es nicht sehen kann (alt="…")</dd></div>
+      <div><dt>Kontrast</dt><dd>wie stark sich Schrift vom Hintergrund abhebt, z. B. 4,5 : 1</dd></div>
+      <div><dt>ARIA</dt><dd>Zusatz-Attribute für Screenreader. Mächtig, aber leicht falsch zu benutzen</dd></div>
+      <div><dt>WCAG</dt><dd>Web Content Accessibility Guidelines – das Regelwerk, an dem gemessen wird</dd></div>
+    </dl>
+  </details>
+
+  <nav class="bf-levels" id="bf-levels" aria-label="Level" tabindex="-1"></nav>
+
+  <section class="bf-play" id="bf-play" aria-labelledby="bf-title">
+    <div class="bf-col">
+      <article class="bf-card bf-mission">
+        <p class="step-no" id="bf-lvl-no"></p>
+        <h2 id="bf-title" tabindex="-1"></h2>
+        <p class="bf-persona"><b id="bf-persona"></b></p>
+        <p id="bf-about"></p>
+        <p class="bf-goal"><b>Ziel:</b> <span id="bf-goal"></span></p>
+        <details class="bf-steps" open><summary>👣 So geht's</summary><ol id="bf-steps"></ol></details>
+      </article>
+
+      <!-- Werkstatt (Level 1–3) -->
+      <article class="bf-card" id="bf-workshop">
+        <div class="bf-ws-head">
+          <h2 class="step-no">// werkstatt</h2>
+          <span class="small c-muted" id="bf-ws-count"></span>
+        </div>
+        <p class="small c-muted" id="bf-ws-intro">Erst ausprobieren, dann reparieren. Wenn du nicht weiterkommst:</p>
+        <button class="btn" id="bf-ws-open" type="button">🔧 Werkstatt öffnen</button>
+        <div id="bf-fixes" hidden></div>
+      </article>
+
+      <!-- Prüfroboter (Level 4) -->
+      <article class="bf-card" id="bf-audit" hidden>
+        <h2 class="step-no">// prüfroboter · axe-core</h2>
+        <button class="btn primary" id="bf-robot" type="button">🤖 Prüfroboter starten</button>
+        <div id="bf-robot-out" aria-live="polite"></div>
+      </article>
+    </div>
+
+    <div class="bf-col">
+      <!-- Simulationsschalter je Level -->
+      <div class="bf-simbar" id="bf-simbar"></div>
+
+      <p class="sr-only" id="bf-before-shop" tabindex="-1">Anfang des Shops. Mit Tab geht es hinein.</p>
+      <div class="bf-browser" id="bf-browser">
+        <div class="bf-bar" aria-hidden="true"><i></i><i></i><i></i><span>klangwerk-tickets.example</span></div>
+        <div class="bf-viewport">
+          <div class="shop" id="shop"></div>
+          <div class="bf-curtain" id="bf-curtain" hidden><p>🕶 Bildschirm aus</p><p class="small">So sieht Mira die Seite. Ton an und hinhören – unten liest der Screenreader vor.</p></div>
+          <p class="bf-nomouse" aria-hidden="true">🖱 Maus gesperrt – nur Tastatur</p>
+        </div>
+      </div>
+      
+
+      <!-- Screenreader-Simulator (Level 1) -->
+      <article class="bf-card bf-sr" id="bf-sr" hidden>
+        <div class="bf-ws-head">
+          <h2 class="step-no">// screenreader · so hört mira die seite</h2>
+          <div class="bf-voice">
+            <button class="btn" type="button" id="bf-sr-voice" aria-pressed="true">🔊 Ton an</button>
+            <button class="btn" type="button" id="bf-sr-fast" aria-pressed="false">🐇 Mira-Tempo</button>
+          </div>
+        </div>
+        <div class="bf-sr-now" id="bf-sr-now" tabindex="0" aria-live="polite" aria-atomic="true" role="region" aria-label="Screenreader-Ausgabe"></div>
+        <div class="bf-sr-keys" role="group" aria-label="Screenreader bedienen">
+          <button class="btn" type="button" id="bf-sr-prev" aria-keyshortcuts="ArrowUp">◀ Zurück</button>
+          <button class="btn" type="button" id="bf-sr-next" aria-keyshortcuts="ArrowDown">Weiter ▶</button>
+          <button class="btn" type="button" id="bf-sr-head" aria-keyshortcuts="H">H · nächste Überschrift</button>
+          <button class="btn primary" type="button" id="bf-sr-act">⏎ Aktivieren</button>
+        </div>
+        <ol class="bf-sr-log" id="bf-sr-log" aria-label="Zuletzt vorgelesen"></ol>
+        <p class="small c-muted">Tastatur: Tab in die Ausgabe oben, dann gehen ↑ ↓ H und Enter – fast wie bei einem echten Screenreader.</p>
+      </article>
+
+      <!-- Elementliste (Level 4) -->
+      <article class="bf-card" id="bf-items" hidden>
+        <div class="bf-ws-head">
+          <h2 class="step-no">// elemente der shopseite</h2>
+          <span class="small c-muted" id="bf-mark-count"></span>
+        </div>
+        <ol class="bf-ilist" id="bf-ilist"></ol>
+        <button class="btn primary" id="bf-report" type="button" disabled>🔍 Funde melden</button>
+        <p class="bf-msg" id="bf-report-msg" aria-live="polite"></p>
+      </article>
+
+      <p class="bf-msg" id="bf-msg" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <dialog class="bf-win" id="bf-win" aria-labelledby="bf-win-title">
+    <p class="kicker" id="bf-win-kicker"></p>
+    <h2 id="bf-win-title"></h2>
+    <p id="bf-win-text"></p>
+    <div id="bf-win-more"></div>
+    <div class="cta">
+      <button class="btn primary" id="bf-next" type="button">Nächstes Level →</button>
+      <button class="btn" id="bf-stay" type="button">Hier bleiben</button>
+    </div>
+  </dialog>
+
+  <section class="bf-done" id="bf-done" hidden aria-labelledby="bf-done-title">
+    <p class="kicker">// alle level geschafft</p>
+    <h2 id="bf-done-title">Vier Menschen, vier Karten – und ein Prüfroboter, der nicht alles sieht.</h2>
+    <p>Barrierefreiheit ist kein Häkchen am Ende des Projekts. Sie fängt bei den Anforderungen an, steckt im Design und im Code – und gehört in jeden Test: automatisch in der Pipeline <b>und</b> von Menschen mit Tastatur und Screenreader.</p>
+    <p>Übrigens: Diese Spielseite selbst wird bei jeder Veröffentlichung mit demselben Prüfroboter getestet.</p>
+    <div class="cta">
+      <a class="btn primary" href="../index.html#contact">Workshop zu Barrierefreiheit &amp; Testing anfragen</a>
+      <a class="btn" href="../sortierbot/">Auch probieren: Der Sortierbot (Data Poisoning)</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span class="c-muted">© 2026 Tobias Konken</span>
+  <a href="../impressum.html">Impressum &amp; Datenschutz</a>
+  <span class="c-muted">Prüfroboter: <a href="vendor/axe-LICENSE.txt">axe-core (MPL 2.0)</a></span>
+</footer>
+
+<script src="vendor/axe.min.js"></script>
+<script src="vendor/axe-de.js"></script>
+<script src="shop.js"></script>
+<script src="levels.js"></script>
+<script src="scene.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

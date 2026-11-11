@@ -1,0 +1,205 @@
+/* Eine Karte, bitte! – baut auf ../style.css auf */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.bf-skip { position: absolute; left: 8px; top: -60px; z-index: 50; background: var(--accent); color: #121214; padding: 8px 14px; border-radius: 6px; font-weight: 700; }
+.bf-skip:focus { top: 8px; }
+
+.bf { max-width: 1180px; }
+.bf-hero { padding: 40px 0 8px; }
+#bf-scene { display: block; width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.bf-intro { margin-top: 24px; max-width: 80ch; }
+.bf-intro h1 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 12px; }
+
+/* Einführung */
+.bf-explain { margin: 24px 0 0; background: var(--panel); border: 1px solid rgba(208, 138, 98, .45); border-radius: 12px; }
+.bf-explain > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; font: 700 16px var(--mono); }
+.bf-explain > summary::-webkit-details-marker { display: none; }
+.bf-explain > summary::after { content: "+"; color: var(--accent); font-size: 20px; }
+.bf-explain[open] > summary::after { content: "−"; }
+.bf-ex-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0 20px 16px; }
+.bf-ex { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.bf-ex h2.step-no { font-size: 12px; font-weight: 400; }
+.bf-ex p { margin: 0 0 10px; }
+.bf-ex-steps { margin: 0 0 10px; padding-left: 20px; }
+.bf-ex-steps li { margin-bottom: 6px; }
+.bf-gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 20px; margin: 0; padding: 0 20px 20px; font-size: 14px; }
+.bf-gloss dt { font: 700 13px var(--mono); color: var(--accent); }
+.bf-gloss dd { margin: 2px 0 0; color: var(--muted); }
+
+/* Level-Leiste */
+.bf-levels { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 20px; }
+.bf-levels:focus { outline: none; }
+.bf-lvl { font: 13px var(--mono); display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; cursor: pointer; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; }
+.bf-lvl span.num { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--bg); font-size: 11px; }
+.bf-lvl:hover:not(:disabled) { border-color: var(--accent); }
+.bf-lvl.active { border-color: var(--accent); background: rgba(208, 138, 98, .14); }
+.bf-lvl.done span.num { background: var(--ok); color: #121214; }
+.bf-lvl.locked { opacity: .55; cursor: not-allowed; }
+
+/* Spielfläche */
+.bf-play { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 20px; align-items: start; }
+.bf-col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.bf-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.bf-card > h2 { font-size: 22px; margin: 0 0 6px; }
+.bf-card h2.step-no { font-size: 12px; font-weight: 400; margin: 0 0 10px; }
+.bf-card h2:focus { outline: none; }
+.bf-card h2:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.bf-persona { margin: 0 0 8px; color: var(--accent); font-family: var(--mono); }
+.bf-goal { padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 6px 6px 0; }
+.bf-steps { margin: 12px 0 0; padding: 10px 14px; border: 1px dashed var(--line); border-radius: 8px; }
+.bf-steps summary { cursor: pointer; font: 700 13px var(--mono); color: var(--accent); }
+.bf-steps ol { margin: 8px 0 0; padding-left: 20px; font-size: 14px; }
+.bf-steps li { margin-bottom: 6px; }
+.bf-msg { min-height: 1.4em; margin: 0; font-size: 15px; }
+.bf-msg.bad, .bad { color: var(--red); }
+.bf-msg.good, .pass { color: var(--ok); }
+.bf-ws-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+pre { margin: 6px 0 10px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; font: 13px/1.5 var(--mono); color: var(--fg); white-space: pre; }
+
+/* Werkstatt */
+.bf-fix { border-top: 1px dashed var(--line); padding: 14px 0 6px; }
+.bf-fix:first-child { border-top: 0; padding-top: 4px; }
+.bf-fix h3 { font-size: 16px; margin: 0 0 6px; }
+.bf-fix h3:focus { outline: none; }
+.bf-fix h3:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.bf-fix.fixed h3 { color: var(--ok); }
+.bf-fix p { margin: 0 0 8px; font-size: 15px; }
+.bf-before { border-color: rgba(224, 138, 128, .5); }
+.bf-fix.fixed pre { border-color: rgba(127, 191, 152, .5); }
+.bf-opts { border: 0; margin: 0 0 10px; padding: 0; }
+.bf-opts legend { font: 700 13px var(--mono); color: var(--accent); margin-bottom: 6px; }
+.bf-opt { display: flex; gap: 10px; align-items: flex-start; padding: 4px 8px; border: 1px solid transparent; border-radius: 8px; cursor: pointer; }
+.bf-opt:hover { border-color: var(--line); }
+.bf-opt:has(input:checked) { border-color: var(--accent); background: rgba(208, 138, 98, .08); }
+.bf-opt input { margin-top: 14px; accent-color: var(--accent); }
+.bf-opt pre { flex: 1; min-width: 0; margin: 4px 0; }
+.bf-fb { margin: 8px 0 0; }
+
+/* Browserfenster mit dem Shop */
+.bf-simbar { display: flex; gap: 10px; flex-wrap: wrap; }
+.bf-simbar:empty { display: none; }
+.bf-browser { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+.bf-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--panel-2); border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--muted); }
+.bf-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.bf-bar span { margin-left: 10px; padding: 2px 10px; background: var(--bg); border-radius: 4px; }
+.bf-viewport { position: relative; }
+.bf-curtain { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; text-align: center; background: #050506; color: var(--fg); padding: 20px; }
+.bf-curtain[hidden] { display: none; }
+.bf-curtain p { margin: 0 0 6px; font: 700 20px var(--mono); }
+.bf-curtain p.small { font: 13px var(--sans); color: var(--muted); }
+.bf-nomouse { display: none; position: absolute; top: 10px; right: 10px; z-index: 6; margin: 0; padding: 6px 10px; border-radius: 6px; background: #121214; color: var(--yellow); font: 13px var(--mono); }
+.bf-browser.nomouse .shop { pointer-events: none; user-select: none; }
+.bf-browser.nomouse .bf-viewport:hover .bf-nomouse { display: block; }
+.bf-browser.nomouse .bf-viewport { cursor: not-allowed; }
+.bf-browser.sim-see .shop-in { filter: url(#bf-protan) blur(1.6px); }
+
+/* Screenreader-Simulator */
+.bf-sr-now { min-height: 3.2em; padding: 12px 14px; background: #050506; border: 1px solid var(--line); border-radius: 8px; font: 700 17px/1.5 var(--mono); color: var(--ok); }
+.bf-sr-now::before { content: "🔊 "; }
+.bf-sr-keys { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.bf-sr-log { list-style: none; margin: 0 0 8px; padding: 0; font: 13px/1.6 var(--mono); color: var(--muted); max-height: 11em; overflow: hidden; }
+.bf-sr-log li:first-child { display: none; }
+.bf-sr-log li::before { content: "› "; color: var(--line); }
+
+/* Prüfroboter und Elementliste */
+.bf-robot-list { margin: 8px 0; padding-left: 18px; font-size: 14px; }
+.bf-robot-list li { margin-bottom: 8px; }
+.bf-ilist { list-style: none; margin: 0 0 14px; padding: 0; }
+.bf-item { padding: 10px 8px; border-top: 1px dashed var(--line); border-radius: 6px; }
+.bf-item.marked { background: rgba(224, 138, 128, .1); }
+.bf-item.bot { opacity: .8; }
+.bf-item-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 14px; }
+.bf-item pre { margin: 6px 0; font-size: 12px; }
+.bf-mark { display: flex; gap: 8px; align-items: center; font-size: 14px; cursor: pointer; }
+.bf-mark input { accent-color: var(--red); width: 16px; height: 16px; }
+.tag { font: 700 11px var(--mono); padding: 2px 8px; border-radius: 4px; }
+.t-bot { background: rgba(217, 181, 106, .18); color: var(--yellow); }
+
+/* Gewonnen */
+.bf-win { max-width: 680px; width: calc(100% - 32px); max-height: calc(100vh - 48px); overflow-y: auto; border: 1px solid var(--accent); border-radius: 12px; background: var(--panel); color: var(--fg); padding: 28px; }
+.bf-win::backdrop { background: rgba(8, 8, 10, .8); }
+.bf-win h2 { margin: 0 0 12px; }
+.bf-win p { line-height: 1.7; }
+.bf-why { padding-left: 18px; font-size: 14px; }
+.bf-why li { margin-bottom: 8px; }
+.bf-done { margin-top: 32px; padding: 28px; border: 1px solid rgba(208, 138, 98, .4); border-radius: 14px; background: linear-gradient(160deg, rgba(208, 138, 98, .09), transparent 55%), var(--panel); }
+.bf-done[hidden] { display: none; }
+
+@media (max-width: 900px) {
+  .bf-play, .bf-ex-grid { grid-template-columns: 1fr; }
+}
+
+/* ================= Der Shop: eine helle, ganz normale Webseite ================= */
+.shop { color: #1f1f1f; background: #fff; font: 15px/1.5 "Segoe UI", system-ui, Arial, sans-serif; }
+.shop-in { min-height: 380px; }
+.s-page { position: relative; padding: 0 0 18px; }
+.s-head { display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #e4e4e7; }
+.s-logo { height: 30px; width: auto; display: block; }
+.s-nav { display: flex; gap: 16px; padding: 8px 18px; border-bottom: 1px solid #e4e4e7; font-size: 14px; }
+.s-nav a, .shop a { color: #1d4ed8; text-decoration: underline; }
+.s-main { padding: 14px 18px 0; }
+.shop h1 { font: 700 22px/1.3 "Segoe UI", system-ui, Arial, sans-serif; margin: 0 0 10px; color: #1f1f1f; }
+.shop p { margin: 0 0 10px; }
+.s-poster { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 8px; margin: 0 0 10px; }
+.s-cats { border: 1px solid #d4d4d8; border-radius: 8px; padding: 8px 12px 10px; margin: 0 0 12px; }
+.s-cats legend { font-weight: 700; padding: 0 4px; }
+.s-radio { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; }
+.s-radio input { width: 18px; height: 18px; accent-color: #1d4ed8; }
+.s-tiles { display: flex; gap: 12px; border: 0; padding: 0; }
+.s-tile { border: 2px solid transparent; border-radius: 12px; cursor: pointer; line-height: 0; }
+.s-tile img { width: 140px; height: auto; }
+.s-tile.sel { border-color: #1d4ed8; }
+.s-buy { display: inline-block; cursor: pointer; line-height: 0; margin: 0 0 10px; }
+.s-btn { display: inline-block; font: 600 15px "Segoe UI", system-ui, Arial, sans-serif; padding: 10px 18px; border-radius: 8px; border: 2px solid transparent; cursor: pointer; margin: 0 0 10px; text-decoration: none !important; }
+.s-primary { background: #1d4ed8; color: #fff !important; }
+.s-secondary { background: #fff; color: #1f1f1f; border-color: #1f1f1f; }
+.s-paleBtn { background: #f3f3f3; color: #c4c4c4; border-color: #f3f3f3; }
+.s-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+.s-msg { font-weight: 600; color: #166534; min-height: 1.5em; }
+
+/* Fokus: im kaputten Shop weg, im reparierten deutlich */
+.s-nofocus *:focus, .s-nofocus *:focus-visible { outline: none !important; box-shadow: none !important; }
+.s-focus *:focus-visible { outline: 3px solid #1d4ed8 !important; outline-offset: 2px; }
+.s-focus .s-primary:focus-visible { outline-color: #0b1b4d !important; box-shadow: 0 0 0 5px #93b4ff; }
+
+/* Cookie-Banner */
+.s-banner { position: absolute; inset: 0; z-index: 3; background: rgba(20, 20, 30, .55); display: flex; align-items: flex-end; }
+.s-banner-box { width: 100%; background: #fff; padding: 16px 18px 8px; border-top: 4px solid #1d4ed8; }
+.s-banner-links { display: flex; gap: 16px; }
+
+/* Kasse */
+.s-sum { padding: 8px 12px; background: #f4f4f5; border-radius: 6px; }
+.s-form { margin: 10px 0 0; }
+.s-field { margin: 0 0 10px; }
+.s-field label { display: block; font-weight: 600; margin-bottom: 3px; }
+.s-input { font: 15px "Segoe UI", system-ui, Arial, sans-serif; width: 100%; max-width: 360px; padding: 8px 10px; border: 2px solid #8f8f8f; border-radius: 6px; color: #1f1f1f; background: #fff; }
+.s-input::placeholder { color: #a3a3a3; }
+.s-input.s-invalid { border-color: #b4453a; }
+.s-err { color: #9f1d14; font-weight: 600; margin: 4px 0 0 !important; }
+.s-err[hidden] { display: none; }
+.s-short { max-width: 200px; }
+
+/* Level 4 */
+.s-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.s-fakeh { font-size: 19px; font-weight: 700; margin: 0 0 4px; }
+.s-dates { margin: 0 0 2px; padding-left: 18px; }
+.s-note { font-size: 13px; color: #52525b; }
+.s-pricerow { display: flex; align-items: center; gap: 8px; }
+.s-ticket { width: 32px; height: auto; }
+.s-price { font-weight: 700; font-size: 18px; }
+.s-fine { font-size: 13px; }
+.s-icon { background: #fff; border: 2px solid #d4d4d8; border-radius: 8px; padding: 6px 8px; cursor: pointer; line-height: 0; margin: 0 0 10px; }
+.s-nl { margin-top: 6px; padding: 10px 12px; background: #f4f4f5; border-radius: 8px; }
+.s-nl label { font-weight: 600; }
+.s-fehler { color: #9f1d14; font-weight: 600; margin: 6px 0 0 !important; }
+.s-foot { margin-top: 16px; padding: 10px 18px 0; border-top: 1px solid #e4e4e7; font-size: 13px; }
+.s-item { border-radius: 6px; transition: box-shadow .15s; }
+.s-hl { box-shadow: 0 0 0 3px #d9b56a; }
+.s-bot { box-shadow: inset 0 0 0 2px rgba(217, 181, 106, .9); }
+.s-bot.s-hl { box-shadow: 0 0 0 3px #d9b56a, inset 0 0 0 2px rgba(217, 181, 106, .9); }
+
+/* Lesecursor des Simulators (sichtbar, wenn der Bildschirm kurz an ist) */
+.sr-cursor { outline: 3px dashed #d08a62 !important; outline-offset: 2px; }
+@media (max-width: 560px) { .s-two { grid-template-columns: 1fr; } .s-tile img { width: 110px; } }
+.bf-voice { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.bf-voice .btn { padding: 6px 12px; font-size: 13px; }
+.bf-voice .btn[aria-pressed="true"] { border-color: var(--accent); }

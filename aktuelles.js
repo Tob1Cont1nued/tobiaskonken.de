@@ -18,6 +18,16 @@
 window.AKTUELLES = [
   {
     label: { de: "Neu · Spiel", en: "New · Game" },
+    titel: { de: "Eine Karte, bitte! Barrierefreiheit zum Ausprobieren", en: "One ticket, please! Try accessibility yourself" },
+    text: {
+      de: "Kauf eine Konzertkarte als Mira (blind), Jonas (ohne Maus) und Herr Kowalski (verschwommener Blick) – repariere den Shop und tritt gegen einen echten Prüfroboter an.",
+      en: "Buy a concert ticket as Mira (blind), Jonas (no mouse) and Mr Kowalski (blurred vision) – fix the shop and take on a real accessibility checker. (German only)",
+    },
+    cover: "bilder/aktuelles/barrierefrei.svg",
+    link: { url: "barrierefrei/", de: "Jetzt spielen", en: "Play now" },
+  },
+  {
+    label: { de: "Neu · Spiel", en: "New · Game" },
     titel: { de: "Der Sortierbot: Data Poisoning zum Ausprobieren", en: "The Sorting Bot: try data poisoning yourself" },
     text: {
       de: "Vergifte die Trainingsdaten eines echten Spamfilters – von Label Flipping bis zur Hintertür. Und im letzten Level findest du selbst die Giftbriefe.",
