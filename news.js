@@ -65,7 +65,42 @@
       if (/^https?:/.test(e.link.url)) { a.target = "_blank"; a.rel = "noopener"; }
       bi(a, { de: (e.link.de || "Mehr") + " →", en: (e.link.en || e.link.de || "More") + " →" });
     }
+    if (e.artikel) {
+      var more = el("button", "news-link link-btn", body);
+      more.type = "button";
+      bi(more, { de: "Weiterlesen →", en: "Read more →" });
+      more.addEventListener("click", function () { Article.open(e); });
+    }
   });
+
+  // ---------- Langer Text ("Weiterlesen") ----------
+  var Article = (function () {
+    var dlg = el("dialog", "article-dlg", document.body);
+    var close = el("button", "lb-close article-close", dlg);
+    close.type = "button"; close.textContent = "✕"; close.setAttribute("aria-label", "Schließen");
+    var inner = el("div", "article-inner", dlg);
+    close.addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });
+    dlg.addEventListener("close", function () { document.body.classList.remove("lb-open"); });
+    return {
+      open: function (e) {
+        inner.innerHTML = "";
+        if (e.label) bi(el("p", "news-date", inner), e.label);
+        bi(el("h2", "", inner), e.titel);
+        ["de", "en"].forEach(function (l) {
+          var box = el("div", "", inner);
+          box.lang = l;
+          (e.artikel[l] || e.artikel.de).forEach(function (para) {
+            var h = /^## /.test(para);
+            el(h ? "h3" : "p", h ? "" : "article-p", box).textContent = h ? para.slice(3) : para;
+          });
+        });
+        document.body.classList.add("lb-open");
+        dlg.showModal();
+        inner.scrollTop = 0;
+      },
+    };
+  })();
 
   // ---------- Pfeile, nur wenn die Reihe breiter ist als der Platz ----------
   var nav = el("div", "news-nav", root);
