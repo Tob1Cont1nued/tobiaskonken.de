@@ -31,7 +31,14 @@ jobs:
 
       - run: npm ci
 
-      - run: npx playwright install --with-deps chromium
+      # Die Systembibliotheken für Chromium sind auf dem Runner schon da. Fallen die Ubuntu-Paketserver aus
+      # (passiert gelegentlich), reicht es, nur den Browser zu laden – der kommt nicht von den Ubuntu-Servern.
+      - name: Browser für die Tests installieren
+        run: |
+          if ! timeout 300 npx playwright install --with-deps chromium; then
+            echo "::warning::Systempakete nicht erreichbar – installiere nur den Browser."
+            npx playwright install chromium
+          fi
 
       - name: Alle Tests (Homepage und Sortierbot) müssen grün sein
         run: npx playwright test
