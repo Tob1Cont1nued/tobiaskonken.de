@@ -77,6 +77,8 @@ pre { margin: 6px 0 10px; padding: 10px 12px; background: var(--bg); border: 1px
 /* Browserfenster mit dem Shop */
 .bf-simbar { display: flex; gap: 10px; flex-wrap: wrap; }
 .bf-simbar:empty { display: none; }
+.bf-focusinfo { margin: 0; align-self: center; font: 14px var(--mono); color: var(--ok); }
+.bf-focusinfo.bad { color: var(--yellow); }
 .bf-browser { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
 .bf-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--panel-2); border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--muted); }
 .bf-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }

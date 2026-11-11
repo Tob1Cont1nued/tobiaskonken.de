@@ -109,12 +109,38 @@
     }
   }
 
-  function startKeys() {
+  function startKeys(b) {
     simOn = true;
     $("bf-browser").classList.add("nomouse");
+    if (b) b.textContent = "▶ Simulation läuft – zurück in den Shop";
+    if (!$("bf-focusinfo")) {
+      var p = document.createElement("p");
+      p.id = "bf-focusinfo"; p.className = "bf-focusinfo";
+      p.textContent = "⌨ Fokus: noch vor dem Shop – drück Tab";
+      $("bf-simbar").appendChild(p);
+    }
     $("bf-before-shop").focus();
     say("Simulation läuft: Maus gesperrt. Drück Tab, um in den Shop zu kommen. Esc ist dein Notausgang.");
   }
+
+  // Fokus-Anzeige außerhalb des Shops: Ohne sie merkt man den unsichtbaren Fokus gar nicht
+
+  function describe(el) {
+    var name = (el.getAttribute("aria-label") || (el.labels && el.labels[0] && el.labels[0].textContent) || el.textContent || "").trim();
+    var role = el.tagName === "A" ? "Link" : el.tagName === "BUTTON" ? "Schalter" : el.type === "radio" ? "Optionsfeld" : el.tagName.toLowerCase();
+    return role + " „" + name + "“";
+  }
+  $("shop").addEventListener("focusin", function (ev) {
+    var info = $("bf-focusinfo");
+    if (L.mode !== "keys" || !info) return;
+    var hidden = !fx.fokus;
+    info.textContent = "⌨ Fokus: " + describe(ev.target) + (hidden ? " – im Shop unsichtbar 👻" : "");
+    info.classList.toggle("bad", hidden);
+    if (hidden && !counters.hidden) {
+      counters.hidden = true;
+      say("Du bist im Shop – aber siehst du, wo? Der Fokusrahmen fehlt. Nur die Anzeige oben verrät es. Drück weiter Tab …", "bad");
+    }
+  });
 
   // ---------- Rückmeldungen aus dem Shop ----------
   function openBarriers() { return L.barriers.filter(function (b) { return !fx[b.id]; }); }
