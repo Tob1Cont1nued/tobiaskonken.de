@@ -402,3 +402,7 @@ body.lb-open { overflow: hidden; }
 @media (max-width: 960px) { .demo-grid, .run-grid { grid-template-columns: 1fr; } .code { max-height: 360px; } }
 .mini-browser { align-self: start; }
 .code { position: relative; }
+.report-links { margin-top: 12px; }
+.report-links .btn { font-size: 13px; padding: 8px 14px; }
+.report-links .pass { color: var(--ok); } .report-links .bad { color: var(--red); }
+.run-term .rep { margin-top: 8px; }

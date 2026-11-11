@@ -22,11 +22,11 @@
 <header class="topbar">
   <a class="brand" href="#top"><span class="c-green">tobias</span><span class="c-muted">@qa</span>:<span class="c-blue">~</span>$</a>
   <nav aria-label="Navigation">
+    <a href="#news-section"><span lang="de">aktuelles</span><span lang="en">news</span></a>
     <a href="#workshop">workshop</a>
     <a href="#assessment">process-map</a>
     <a href="#maturity"><span lang="de">reifegrad</span><span lang="en">maturity</span></a>
     <a href="#demo">demo</a>
-    <a href="#news-section"><span lang="de">aktuelles</span><span lang="en">news</span></a>
     <a href="#about"><span lang="de">profil</span><span lang="en">about</span></a>
     <a href="#skills">skills</a>
     <a href="#experience"><span lang="de">projekte</span><span lang="en">projects</span></a>
@@ -72,6 +72,12 @@
         <a class="btn" href="#workshop"><span lang="de">Workshop: KI mit KI testen</span><span lang="en">Workshop: testing AI with AI</span></a>
       </div>
     </div>
+  </section>
+
+  <!-- ============ Aktuelles ============ -->
+  <section id="news-section" class="block">
+    <h2><span class="c-green">#</span> <span lang="de">aktuelles</span><span lang="en">news</span></h2>
+    <div class="news" id="news"></div>
   </section>
 
   <!-- ============ Workshop: Tresorwächter ============ -->
@@ -270,15 +276,13 @@
         <div class="ci-box" id="demo-ci">
           <p class="step-no">// <span lang="de">echte reports aus github actions</span><span lang="en">real reports from github actions</span></p>
           <p class="ci-line" id="demo-ci-line"><span lang="de">Die Reports entstehen bei jedem Update dieser Seite automatisch.</span><span lang="en">The reports are generated automatically on every update of this page.</span></p>
+          <div class="cta report-links">
+            <a class="btn" href="report/ok/index.html" target="_blank" rel="noopener">📄 <span lang="de">Report ohne Fehler</span><span lang="en">Report without bug</span> <span class="pass">✓</span></a>
+            <a class="btn" href="report/bug/index.html" target="_blank" rel="noopener">📄 <span lang="de">Report mit Fehler</span><span lang="en">Report with bug</span> <span class="bad">✘</span></a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ============ Aktuelles ============ -->
-  <section id="news-section" class="block">
-    <h2><span class="c-green">#</span> <span lang="de">aktuelles</span><span lang="en">news</span></h2>
-    <div class="news" id="news"></div>
   </section>
 
   <!-- ============ Profil ============ -->

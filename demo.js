@@ -176,6 +176,9 @@
                      : t("# Unerwartet rot – bitte melde mir das!", "# Unexpectedly red – please let me know!"))
       : (bug.checked ? t("# Fehler nicht gefunden?! Das wäre ein schlechter Test.", "# Bug not caught?! That would be a bad test.")
                      : t("# Alles grün. Jetzt den Fehler einbauen und nochmal laufen lassen.", "# All green. Now plant the bug and run again.")), "c-muted");
+    var rep = bug.checked ? "report/bug/index.html" : "report/ok/index.html";
+    line('📄 <a href="' + rep + '" target="_blank" rel="noopener">' + t("Echten Playwright-Report aus GitHub Actions öffnen", "Open the real Playwright report from GitHub Actions") +
+      (bug.checked ? t(" (mit Fehler)", " (with bug)") : t(" (ohne Fehler)", " (without bug)")) + " →</a>", "rep");
     btn.disabled = false;
     running = false;
   });
