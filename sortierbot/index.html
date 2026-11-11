@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sortierbot · Data Poisoning zum Ausprobieren</title>
+<meta name="description" content="Ein Spiel über Data Poisoning: Vergifte die Trainingsdaten eines echten Spamfilters – und finde am Ende selbst die Giftbriefe.">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="sortierbot.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../index.html"><span class="c-green">tobias</span><span class="c-muted">@qa</span>:<span class="c-blue">~/sortierbot</span>$</a>
+  <nav aria-label="Navigation">
+    <a href="../index.html">home</a>
+    <a href="../index.html#workshop">workshop</a>
+    <a href="../index.html#contact">kontakt</a>
+  </nav>
+</header>
+
+<main class="sb">
+  <section class="sb-hero">
+    <canvas id="sb-scene" width="480" height="120" aria-hidden="true"></canvas>
+    <div class="sb-intro">
+      <p class="kicker">// spiel · data poisoning</p>
+      <h1>Der Sortierbot</h1>
+      <p>Der Sortierbot ist ein echter kleiner Spamfilter. Er rechnet hier in deinem Browser und lernt aus einem Stapel beschrifteter Briefe. Deine Aufgabe: <b>Vergifte seine Trainingsdaten</b>, bis er tut, was du willst. Fünf Level lang bist du der Angreifer – im sechsten wechselst du die Seite.</p>
+    </div>
+  </section>
+
+  <nav class="sb-levels" id="sb-levels" aria-label="Level"></nav>
+
+  <!-- Angriffs-Level -->
+  <section class="sb-play" id="sb-attack" hidden>
+    <div class="sb-col">
+      <article class="sb-card sb-mission">
+        <p class="step-no" id="sb-lvl-no"></p>
+        <h2 id="sb-title"></h2>
+        <p id="sb-story"></p>
+        <p class="sb-goal"><b>Ziel:</b> <span id="sb-goal"></span></p>
+        <ul class="sb-rules" id="sb-rules"></ul>
+        <div class="sb-hints">
+          <button class="link-btn" id="sb-hint-btn" type="button">💡 Tipp anzeigen</button>
+          <ol id="sb-hints"></ol>
+        </div>
+      </article>
+
+      <article class="sb-card" id="sb-target-card">
+        <p class="step-no">// ziel-mail</p>
+        <div class="sb-mail" id="sb-target-mail"></div>
+        <div class="sb-verdict" id="sb-verdict" aria-live="polite"></div>
+        <p class="small c-muted sb-legend">Farbe der Wörter: <span class="w-spam">spricht für Spam</span> · <span class="w-ok">spricht für Ok</span>. Fahr über ein Wort für seinen Einfluss.</p>
+      </article>
+
+      <article class="sb-card" id="sb-trigger-card" hidden>
+        <p class="step-no">// trigger-mails</p>
+        <div id="sb-triggers"></div>
+      </article>
+    </div>
+
+    <div class="sb-col">
+      <article class="sb-card">
+        <p class="step-no">// dein brief für den trainingsstapel</p>
+        <textarea id="sb-text" rows="5" placeholder="Schreib hier deinen Brief …" spellcheck="false"></textarea>
+        <div class="sb-editbar">
+          <span class="small c-muted" id="sb-count">0 Wörter</span>
+          <div class="sb-label" id="sb-label" role="radiogroup" aria-label="Label">
+            <button type="button" role="radio" data-label="ok" aria-checked="true">✉ Ok</button>
+            <button type="button" role="radio" data-label="spam" aria-checked="false">🗑 Spam</button>
+          </div>
+          <span class="small c-muted" id="sb-reviewer" hidden>Label vergibt die Prüferin</span>
+        </div>
+        <div class="sb-actions">
+          <button class="btn primary" id="sb-add" type="button">☠ In den Stapel schmuggeln</button>
+          <button class="link-btn" id="sb-copy" type="button">Ziel-Mail einfügen</button>
+        </div>
+        <p class="sb-msg" id="sb-msg" aria-live="polite"></p>
+      </article>
+
+      <article class="sb-card">
+        <div class="sb-stack-head">
+          <p class="step-no">// eingeschmuggelt <span id="sb-budget"></span></p>
+          <button class="link-btn" id="sb-reset" type="button">Level zurücksetzen</button>
+        </div>
+        <ol class="sb-stack" id="sb-stack"></ol>
+        <div class="sb-qk" id="sb-qk">
+          <p class="step-no">// qualitätskontrolle</p>
+          <div class="sb-meter"><b id="sb-qk-bar"></b><i id="sb-qk-min"></i></div>
+          <p class="small" id="sb-qk-text"></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Detektiv-Level -->
+  <section class="sb-play sb-detective" id="sb-detect" hidden>
+    <div class="sb-col">
+      <article class="sb-card sb-mission">
+        <p class="step-no">level 6</p>
+        <h2 id="sb-d-title"></h2>
+        <p id="sb-d-story"></p>
+        <p class="sb-goal"><b>Ziel:</b> <span id="sb-d-goal"></span></p>
+        <ul class="sb-rules" id="sb-d-rules"></ul>
+        <div class="sb-hints">
+          <button class="link-btn" id="sb-d-hint-btn" type="button">💡 Tipp anzeigen</button>
+          <ol id="sb-d-hints"></ol>
+        </div>
+      </article>
+      <article class="sb-card">
+        <p class="step-no">// werkzeug 2 · auffällige wörter</p>
+        <div id="sb-odd"></div>
+        <p class="small c-muted">Fahr über ein Wort, um zu sehen, wo es vorkommt.</p>
+      </article>
+      <article class="sb-card">
+        <p class="step-no">// auswertung</p>
+        <p id="sb-d-count">0 Briefe markiert</p>
+        <button class="btn primary" id="sb-d-check" type="button">🔍 Markierte Briefe melden</button>
+        <p class="sb-msg" id="sb-d-msg" aria-live="polite"></p>
+      </article>
+    </div>
+    <div class="sb-col sb-col-wide">
+      <article class="sb-card">
+        <div class="sb-stack-head">
+          <p class="step-no">// trainingsstapel · 30 briefe</p>
+          <label class="small c-muted"><input type="checkbox" id="sb-d-tool1" checked> Werkzeug 1 anzeigen</label>
+        </div>
+        <ol class="sb-dlist" id="sb-dlist"></ol>
+      </article>
+    </div>
+  </section>
+
+  <!-- Auflösung nach einem gelösten Level -->
+  <dialog class="sb-win" id="sb-win">
+    <p class="kicker" id="sb-win-kicker"></p>
+    <h2 id="sb-win-title"></h2>
+    <p id="sb-win-text"></p>
+    <div class="cta">
+      <button class="btn primary" id="sb-next" type="button">Nächstes Level →</button>
+      <button class="btn" id="sb-stay" type="button">Hier bleiben</button>
+    </div>
+  </dialog>
+
+  <section class="sb-done" id="sb-done" hidden>
+    <p class="kicker">// alle level geschafft</p>
+    <h2>Du hast den Sortierbot vergiftet – und entgiftet.</h2>
+    <p>Data Poisoning ist kein Science-Fiction: Überall, wo Modelle aus Daten lernen, die nicht vollständig unter Kontrolle sind, kann jemand mitlernen lassen. Testen heißt deshalb auch: die Daten testen, nicht nur das Modell.</p>
+    <div class="cta">
+      <a class="btn primary" href="../index.html#contact">Workshop zu KI-Testing anfragen</a>
+      <a class="btn" href="https://tresorwaechter.onrender.com" target="_blank" rel="noopener">Auch probieren: Tresorwächter (Prompt Injection)</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span class="c-muted">© 2026 Tobias Konken</span>
+  <a href="../impressum.html">Impressum &amp; Datenschutz</a>
+  <span class="c-muted">exit 0</span>
+</footer>
+
+<script src="model.js"></script>
+<script src="data.js"></script>
+<script src="rules.js"></script>
+<script src="levels-text.js"></script>
+<script src="scene.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 # Bei jedem Push: Playwright-Tests zweimal ausführen und die Seite samt beider Reports veröffentlichen.
-#   1. ohne Bug        → alle Tests müssen grün sein, sonst wird nichts veröffentlicht
-#   2. mit ?bug=lang   → mindestens ein Test MUSS rot werden, sonst taugen die Tests nichts
+#   1. alle Tests      → müssen grün sein, sonst wird nichts veröffentlicht
+#   2. Sprachtests     → Demo-Report ohne Bug
+#   3. mit ?bug=lang   → mindestens ein Sprachtest MUSS rot werden, sonst taugen die Tests nichts
 name: Tests und Veröffentlichung
 
 on:
@@ -32,14 +33,19 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
 
-      - name: Tests ohne Bug (müssen grün sein)
+      - name: Alle Tests (Homepage und Sortierbot) müssen grün sein
         run: npx playwright test
+        env:
+          REPORT_DIR: report/all
+
+      - name: Demo-Report ohne Bug (Sprachwechsel)
+        run: npx playwright test tests/sprache.spec.ts
         env:
           REPORT_DIR: report/ok
 
       - name: Tests mit eingebautem Bug (müssen rot werden)
         run: |
-          if BUG=1 REPORT_DIR=report/bug npx playwright test; then
+          if BUG=1 REPORT_DIR=report/bug npx playwright test tests/sprache.spec.ts; then
             echo "::error::Der eingebaute Fehler wurde NICHT erkannt – die Tests sind zu schwach."
             exit 1
           fi

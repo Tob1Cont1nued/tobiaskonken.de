@@ -406,3 +406,4 @@ body.lb-open { overflow: hidden; }
 .report-links .btn { font-size: 13px; padding: 8px 14px; }
 .report-links .pass { color: var(--ok); } .report-links .bad { color: var(--red); }
 .run-term .rep { margin-top: 8px; }
+.sb-teaser { margin: 18px 0 0; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 8px; font-size: 15px; }

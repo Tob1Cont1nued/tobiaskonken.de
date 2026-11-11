@@ -17,6 +17,16 @@
 
 window.AKTUELLES = [
   {
+    label: { de: "Neu · Spiel", en: "New · Game" },
+    titel: { de: "Der Sortierbot: Data Poisoning zum Ausprobieren", en: "The Sorting Bot: try data poisoning yourself" },
+    text: {
+      de: "Vergifte die Trainingsdaten eines echten Spamfilters – von Label Flipping bis zur Hintertür. Und im letzten Level findest du selbst die Giftbriefe.",
+      en: "Poison the training data of a real spam filter – from label flipping to a backdoor. In the last level you hunt down the poisoned letters yourself. (German only)",
+    },
+    cover: "bilder/aktuelles/sortierbot.svg",
+    link: { url: "sortierbot/", de: "Jetzt spielen", en: "Play now" },
+  },
+  {
     label: { de: "AutomationSTAR 2026", en: "AutomationSTAR 2026" },
     titel: { de: "Impressionen von der AutomationSTAR 2026", en: "Impressions from AutomationSTAR 2026" },
     text: {
