@@ -144,4 +144,26 @@ test.describe("Barrierefreiheits-Spiel", () => {
     await page.getByRole("button", { name: "🔍 Funde melden" }).click();
     await expect(page.locator("#bf-win")).toContainText("Der Roboter fand 4 von 9");
   });
+
+  test("Level neu starten macht die Reparaturen rückgängig, Komplett-Reset löscht den Fortschritt", async ({ page }) => {
+    await open(page, 3);
+    await page.getByRole("button", { name: "🔧 Werkstatt öffnen" }).click();
+    const sec = page.locator('[data-fix="kontrast"]');
+    await sec.locator('input[value="2"]').check();
+    await sec.getByRole("button", { name: "Änderung übernehmen" }).click();
+    await expect(page.locator('[data-fix="kontrast"]')).toHaveClass(/fixed/);
+    await page.getByRole("button", { name: "↺ Level neu starten" }).click();
+    await expect(page.locator("#bf-ws-count")).toHaveText("0 / 3 repariert");
+
+    let asked = "";
+    page.once("dialog", (d) => { asked = d.message(); d.dismiss(); });
+    await page.getByRole("button", { name: "⟲ Spiel komplett zurücksetzen" }).click();
+    expect(asked).toContain("Fortschritt");
+    expect(await page.evaluate(() => localStorage.getItem("barrierefrei-progress"))).toBe("[1,2]"); // abgebrochen: bleibt
+
+    page.once("dialog", (d) => d.accept());
+    await page.getByRole("button", { name: "⟲ Spiel komplett zurücksetzen" }).click();
+    await expect(page.locator("#bf-title")).toHaveText(/Blindflug/);
+    expect(await page.evaluate(() => localStorage.getItem("barrierefrei-progress"))).toBeNull();
+  });
 });

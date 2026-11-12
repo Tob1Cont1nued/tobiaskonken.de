@@ -293,6 +293,18 @@
     });
   })();
 
+  // ---------- Zurücksetzen ----------
+  $("sb-reset-level").addEventListener("click", function () {
+    letters[current] = []; hintsShown[current] = 0; marked.clear();
+    openLevel(current);
+    showMsg("Level neu gestartet.", "");
+  });
+  $("sb-reset-all").addEventListener("click", function () {
+    if (!confirm("Spiel komplett zurücksetzen? Dein Fortschritt in allen Levels geht verloren.")) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.replace(location.pathname + location.search); // frisch laden, ab Level 1
+  });
+
   // ---------- Start ----------
   var start = Number((location.hash.match(/level-(\d)/) || [])[1]) || 1;
   if (!unlocked(start)) start = 1;

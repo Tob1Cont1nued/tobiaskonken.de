@@ -473,6 +473,18 @@
     $("bf-title").focus({ preventScroll: true });
   });
 
+  // ---------- Zurücksetzen ----------
+  $("bf-reset-level").addEventListener("click", function () {
+    if (synth) synth.cancel();
+    openLevel(current); // alle Reparaturen dieses Levels zurück auf kaputt
+    say("Level neu gestartet – alle Barrieren sind wieder da.");
+  });
+  $("bf-reset-all").addEventListener("click", function () {
+    if (!confirm("Spiel komplett zurücksetzen? Dein Fortschritt in allen Levels geht verloren.")) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.replace(location.pathname + location.search); // frisch laden, ab Level 1
+  });
+
   // ---------- Start ----------
   var start = Number((location.hash.match(/level-(\d)/) || [])[1]) || 1;
   if (!unlocked(start)) start = 1;

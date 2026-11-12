@@ -120,4 +120,22 @@ test.describe("Sortierbot", () => {
     });
     expect(r).toEqual({ size: 30, poison: 6, all: true, oneFalse: true, twoFalse: false, missing: false, trigger: ["kürbiskernbrot"] });
   });
+
+  test("Level neu starten leert den Stapel, Komplett-Reset löscht den Fortschritt", async ({ page }) => {
+    await page.getByRole("button", { name: "Ziel-Mail einfügen" }).click();
+    await page.getByRole("button", { name: /In den Stapel schmuggeln/ }).click();
+    await page.getByRole("button", { name: "Hier bleiben" }).click();
+    await expect(page.locator("#sb-stack li:not(.empty)")).toHaveCount(1);
+    await page.getByRole("button", { name: "↺ Level neu starten" }).click();
+    await expect(page.locator("#sb-stack")).toHaveText("Noch nichts eingeschmuggelt.");
+
+    await page.evaluate(() => localStorage.setItem("sortierbot-progress", "[1,2,3]"));
+    await page.goto("/sortierbot/#level-4");
+    await page.reload();
+    await expect(page.locator("#sb-levels .sb-lvl.active")).toContainText("Hintertür");
+    page.once("dialog", (d) => d.accept());
+    await page.getByRole("button", { name: "⟲ Spiel komplett zurücksetzen" }).click();
+    await expect(page.locator("#sb-levels .sb-lvl").nth(1)).toBeDisabled();
+    expect(await page.evaluate(() => localStorage.getItem("sortierbot-progress"))).toBeNull();
+  });
 });
