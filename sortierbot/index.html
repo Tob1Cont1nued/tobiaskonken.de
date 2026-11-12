@@ -69,6 +69,27 @@
     </dl>
   </details>
 
+  <div class="sb-notes">
+  <!-- Aus der Praxis: echter Fall (Quellen: heise online 25.11.2024, CryptoSlate 22.11.2024) -->
+  <aside class="sb-note" aria-labelledby="sb-note-h">
+    <p class="step-no">📰 aus der praxis</p>
+    <h2 id="sb-note-h">2.500 Dollar weg in 30 Minuten</h2>
+    <p>Im November 2024 ließ sich ein Krypto-Trader von ChatGPT einen Handelsbot für die Memecoin-Plattform Pump.fun schreiben. Der Code nutzte eine angebliche Solana-API, deren Domain erst zwei Monate vorher registriert worden war, und schickte ihr den privaten Schlüssel seiner Wallet. Er startete den Bot mit seiner Hauptwallet. Nach 30 Minuten war alles weg, rund 2.500 US-Dollar.</p>
+    <p>Die Sicherheitsfirma Scam Sniffer fand dahinter GitHub-Repositories, die offenbar gezielt angelegt wurden, damit KI-Modelle den Schadcode lernen und weiterempfehlen. SlowMist-Gründer Yu Xian warnte, AI Poisoning sei damit von einem theoretischen Risiko zu einer echten Bedrohung geworden. Das ist Data Poisoning wie hier im Spiel, nur mit Code statt Briefen. Ganz geklärt ist es nicht: ChatGPT könnte die Seite auch über die Websuche gefunden haben.</p>
+    <p><b>Was heißt das fürs Testen?</b> KI-generierten Code wie fremden Code behandeln: jede Abhängigkeit und jede URL prüfen und niemals echte Schlüssel in ungeprüften Code geben.</p>
+    <p class="small c-muted">Quellen: <a href="https://heise.de/-10169338" rel="noopener">heise online</a> · <a href="https://cryptoslate.com/blockchain-security-firm-warns-of-ai-code-poisoning-risk-after-openais-chatgpt-recommends-scam-api/" rel="noopener">CryptoSlate</a></p>
+  </aside>
+  <!-- Aus der Praxis: Quellen vergiftet (Quellen: Android Central / Washington Post, OECD AI Incidents, 2025) -->
+  <aside class="sb-note" aria-labelledby="sb-note2-h">
+    <p class="step-no">📰 aus der praxis</p>
+    <h2 id="sb-note2-h">Die falsche Hotline aus der KI-Suche</h2>
+    <p>2025 fluteten Betrüger Foren und Bewertungsseiten mit falschen Kundenservice-Nummern großer Firmen, zum Beispiel von Kreuzfahrtreedereien. Googles KI-Zusammenfassungen (AI Overviews) übernahmen die Nummern und zeigten sie als offizielle Hotline an. Ein Kunde rief die angebliche Nummer von Royal Caribbean an, nannte seine Kreditkartendaten und hatte binnen 24 Stunden betrügerische Abbuchungen. In Indien verlor ein 65-Jähriger auf diesem Weg über 3.000 Dollar.</p>
+    <p>Vergiftet wurde hier nicht das Training, sondern die Quellen, aus denen die KI beim Antworten liest. Das Prinzip ist dasselbe wie im Spiel: Genug unauffällige, falsch beschriftete Beiträge, und die KI hält das Falsche für richtig.</p>
+    <p><b>Was heißt das fürs Testen?</b> Die Datenquellen eines KI-Systems gehören mit in den Test: Woher kommen sie, wer kann sie verändern, und merkt das System, wenn sie der offiziellen Quelle widersprechen?</p>
+    <p class="small c-muted">Quellen: <a href="https://www.androidcentral.com/apps-software/ai/google-ai-overviews-led-users-astray-some-phone-numbers-are-scams-report" rel="noopener">Android Central</a> · <a href="https://oecd.ai/en/incidents/2025-08-18-87c0" rel="noopener">OECD AI Incidents</a></p>
+  </aside>
+  </div>
+
   <nav class="sb-levels" id="sb-levels" aria-label="Level"></nav>
   <p class="game-reset"><button class="link-btn" id="sb-reset-level" type="button">↺ Level neu starten</button> <button class="link-btn" id="sb-reset-all" type="button">⟲ Spiel komplett zurücksetzen</button></p>
 

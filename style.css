@@ -426,3 +426,14 @@ button.news-link { text-align: left; padding: 0; }
 .article-p { margin: 0 0 14px; line-height: 1.7; }
 .article-close { position: absolute; top: 14px; right: 14px; }
 @media (max-width: 560px) { .article-inner { padding: 24px 18px; } }
+
+/* Einführungstext */
+.moin { margin: 0 0 22px; }
+.moin p { max-width: 62ch; margin: 0 0 12px; line-height: 1.6; }
+
+/* Hero ab Desktop: Text umfließt das Terminal links (auf dem Handy bleibt alles untereinander) */
+@media (min-width: 861px) {
+  .hero { display: flow-root; }
+  .hero > .term { float: left; width: min(470px, 46%); margin: 6px 40px 20px 0; }
+  .hero .moin p { max-width: none; }
+}

@@ -146,3 +146,10 @@
 .sb-why p { margin: 0 0 6px; }
 .sb-why ul { margin: 0 0 6px; padding-left: 18px; }
 @media (max-width: 900px) { .sb-ex-grid { grid-template-columns: 1fr; } .exw { grid-template-columns: 84px 1fr 86px; } }
+
+/* Aus der Praxis: echter Fall */
+.sb-notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin: 20px 0 0; }
+.sb-note { margin: 0; padding: 16px 20px; background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; }
+.sb-note h2 { margin: 4px 0 8px; font-size: 18px; }
+.sb-note p { margin: 0 0 10px; max-width: 80ch; }
+.sb-note p:last-child { margin-bottom: 0; }

@@ -18,9 +18,9 @@
 window.AKTUELLES = [
   {
     label: { de: "Neu · Spiel", en: "New · Game" },
-    titel: { de: "Eine Karte, bitte! Barrierefreiheit zum Ausprobieren", en: "One ticket, please! Try accessibility yourself" },
+    titel: { de: "Eine Karte, bitte!", en: "One ticket, please!" },
     text: {
-      de: "Kauf eine Konzertkarte als Mira (blind), Jonas (ohne Maus) und Herr Kowalski (verschwommener Blick) – repariere den Shop und tritt gegen einen echten Prüfroboter an.",
+      de: "Was ist eigentlich Barrierefreiheit? Dinge, die für uns völlig normal sind, sind für andere Menschen eine große Hürde. Wir sollten als Tester und Testerinnen empathisch sein und unsere angebotene Software auf genau solche Aspekte der Accessibility prüfen. Wie sich das anfühlen kann, zeigt euch dieses Spiel.",
       en: "Buy a concert ticket as Mira (blind), Jonas (no mouse) and Mr Kowalski (blurred vision) – fix the shop and take on a real accessibility checker. (German only)",
     },
     cover: "bilder/aktuelles/barrierefrei.svg",
@@ -28,9 +28,9 @@ window.AKTUELLES = [
   },
   {
     label: { de: "Neu · Spiel", en: "New · Game" },
-    titel: { de: "Der Sortierbot: Data Poisoning zum Ausprobieren", en: "The Sorting Bot: try data poisoning yourself" },
+    titel: { de: "Der vergiftete Sortierbot: Wer trainiert hier eigentlich wen?", en: "The poisoned sorting bot: who is training whom?" },
     text: {
-      de: "Vergifte die Trainingsdaten eines echten Spamfilters – von Label Flipping bis zur Hintertür. Und im letzten Level findest du selbst die Giftbriefe.",
+      de: "Man sollte sich häufig die Frage stellen: Wo kommen die Daten für LLMs eigentlich her, wer hat sie trainiert und vor allem, wie sicher ist es, dass das LLM nicht mit vergifteten Daten trainiert wurde? Was das bedeutet, zeigt euch dieses Spiel.",
       en: "Poison the training data of a real spam filter – from label flipping to a backdoor. In the last level you hunt down the poisoned letters yourself. (German only)",
     },
     cover: "bilder/aktuelles/sortierbot.svg",
