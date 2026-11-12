@@ -51,3 +51,19 @@
   items.forEach(function (d) { d.addEventListener("toggle", sync); });
   sync();
 })();
+
+// Versteckter Admin-Zugang: Doppelklick auf „exit 0“ im Footer oder #admin in der Adresse.
+// admin.js wird erst dann geladen – für alle anderen Besucher bleibt die Seite unverändert.
+(function () {
+  function load() {
+    if (window.__adminLoaded) return;
+    window.__adminLoaded = true;
+    var s = document.createElement("script");
+    s.src = "admin.js";
+    document.body.appendChild(s);
+  }
+  var t = document.querySelector("[data-admin]");
+  if (t) t.addEventListener("dblclick", load);
+  if (location.hash === "#admin") load();
+  window.addEventListener("hashchange", function () { if (location.hash === "#admin") load(); });
+})();
