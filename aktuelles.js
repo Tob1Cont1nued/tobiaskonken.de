@@ -89,8 +89,8 @@ window.AKTUELLES = [
       en: "Requirements engineering – and why AI won't replace you after all",
     },
     text: {
-      de: "KI schreibt Code und Testfälle in Sekunden. Aber sie weiß nicht, was eure Nutzer wirklich brauchen. In meiner Keynote geht es darum, warum gute Anforderungen wichtiger werden – nicht unwichtiger.",
-      en: "AI writes code and test cases in seconds. But it does not know what your users really need. My keynote is about why good requirements become more important – not less.",
+      de: "KI schreibt Code und Testfälle in Sekunden. Was eure Nutzer brauchen, weiß sie trotzdem nicht. In meiner Keynote geht es darum, warum gute Anforderungen dadurch wichtiger werden.",
+      en: "AI writes code and test cases in seconds. It still does not know what your users need. My keynote is about why that makes good requirements more important.",
     },
     cover: "bilder/aktuelles/keynote-re.svg",
     link: { url: "#contact", de: "Keynote anfragen", en: "Book the keynote" },

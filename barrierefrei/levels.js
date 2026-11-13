@@ -4,7 +4,7 @@ window.BF_LEVELS = [
   {
     id: 1, mode: "sr", title: "Blindflug",
     persona: "Mira, 34, Softwareentwicklerin",
-    about: "Mira ist seit ihrer Geburt blind. Sie nutzt einen Screenreader, ein Programm, das ihr die Seite vorliest – und zwar so schnell, dass die meisten von uns nicht mitkommen würden. Das Problem ist nie Mira. Das Problem ist der Code.",
+    about: "Mira ist seit ihrer Geburt blind. Sie nutzt einen Screenreader, ein Programm, das ihr die Seite vorliest, und zwar so schnell, dass die meisten von uns nicht mitkommen würden. Wenn sie im Shop nicht weiterkommt, liegt das am Code.",
     goal: "Wähle einen Stehplatz und leg ihn in den Warenkorb – nur mit dem Screenreader.",
     steps: [
       "Der Bildschirm ist aus. Unten hörst du die Seite so, wie Miras Screenreader sie vorliest.",
@@ -169,7 +169,7 @@ window.BF_LEVELS = [
     about: "Dein Team hat einen automatischen Barrierefreiheits-Scan in die Pipeline gebaut. Der Prüfroboter hier ist kein Spielzeug: Es ist axe-core, ein echtes Open-Source-Werkzeug, das in vielen Testpipelines steckt – auch neben Playwright.",
     goal: "Diese Shopseite hat neun Barrieren. Finde die, die der Roboter nicht meldet. Höchstens ein Fehlalarm ist erlaubt.",
     steps: [
-      "Starte den Prüfroboter. Er prüft die Shopseite wirklich, hier in deinem Browser.",
+      "Starte den Prüfroboter. Er prüft die echte Shopseite, hier in deinem Browser.",
       "Geh die Elementliste durch: Was sieht man, was steht im Code?",
       "Markiere alles, was eine Barriere ist, obwohl der Roboter schweigt.",
       "Melde deine Funde. Tipp: Denk an Mira, Jonas und Herrn Kowalski.",

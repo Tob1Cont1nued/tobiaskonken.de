@@ -24,7 +24,7 @@
     <div class="sb-intro">
       <p class="kicker">// spiel · data poisoning</p>
       <h1>Der Sortierbot</h1>
-      <p>Der Sortierbot ist ein echter kleiner Spamfilter. Er rechnet hier in deinem Browser und lernt aus einem Stapel beschrifteter Briefe. Deine Aufgabe: <b>Vergifte seine Trainingsdaten</b>, bis er tut, was du willst. Fünf Level lang bist du der Angreifer – im sechsten wechselst du die Seite.</p>
+      <p>Der Sortierbot ist ein echter kleiner Spamfilter. Er rechnet hier in deinem Browser und lernt aus einem Stapel beschrifteter Briefe. Du <b>vergiftest seine Trainingsdaten</b>, bis er tut, was du willst. Fünf Level lang bist du der Angreifer, im sechsten wechselst du die Seite.</p>
     </div>
   </section>
 
@@ -33,8 +33,8 @@
     <div class="sb-ex-grid">
       <article class="sb-ex">
         <p class="step-no">01 · was ist data poisoning?</p>
-        <p>Eine KI lernt aus Beispielen – so wie jemand, der mit Karteikarten Vokabeln lernt. <b>Wer heimlich falsche Karteikarten unterschiebt, bringt ihr Falsches bei.</b> Das nennt man Data Poisoning, also das Vergiften von Trainingsdaten.</p>
-        <p>Das Gemeine daran: Die KI arbeitet danach ganz normal weiter. Nur in den Fällen, die der Angreifer im Blick hatte, entscheidet sie falsch.</p>
+        <p>Eine KI lernt aus Beispielen, so wie jemand, der mit Karteikarten Vokabeln lernt. <b>Wer heimlich falsche Karteikarten unterschiebt, bringt ihr Falsches bei.</b> Das nennt man Data Poisoning, also das Vergiften von Trainingsdaten.</p>
+        <p>Gemein ist, dass die KI danach ganz normal weiterarbeitet. Nur in den Fällen, die der Angreifer im Blick hatte, entscheidet sie falsch.</p>
       </article>
       <article class="sb-ex">
         <p class="step-no">02 · wie lernt der sortierbot?</p>
@@ -76,7 +76,7 @@
     <h2 id="sb-note-h">2.500 Dollar weg in 30 Minuten</h2>
     <p>Im November 2024 ließ sich ein Krypto-Trader von ChatGPT einen Handelsbot für die Memecoin-Plattform Pump.fun schreiben. Der Code nutzte eine angebliche Solana-API, deren Domain erst zwei Monate vorher registriert worden war, und schickte ihr den privaten Schlüssel seiner Wallet. Er startete den Bot mit seiner Hauptwallet. Nach 30 Minuten war alles weg, rund 2.500 US-Dollar.</p>
     <p>Die Sicherheitsfirma Scam Sniffer fand dahinter GitHub-Repositories, die offenbar gezielt angelegt wurden, damit KI-Modelle den Schadcode lernen und weiterempfehlen. SlowMist-Gründer Yu Xian warnte, AI Poisoning sei damit von einem theoretischen Risiko zu einer echten Bedrohung geworden. Das ist Data Poisoning wie hier im Spiel, nur mit Code statt Briefen.</p>
-    <p><b>Was heißt das fürs Testen?</b> KI-generierten Code wie fremden Code behandeln: jede Abhängigkeit und jede URL prüfen und niemals echte Schlüssel in ungeprüften Code geben.</p>
+    <p><b>Fürs Testen</b> heißt das, KI-generierten Code wie fremden Code zu behandeln, also jede Abhängigkeit und jede URL zu prüfen und niemals echte Schlüssel in ungeprüften Code zu geben.</p>
     <p class="small c-muted">Quellen: <a href="https://heise.de/-10169338" rel="noopener">heise online</a> · <a href="https://cryptoslate.com/blockchain-security-firm-warns-of-ai-code-poisoning-risk-after-openais-chatgpt-recommends-scam-api/" rel="noopener">CryptoSlate</a></p>
   </aside>
   <!-- Aus der Praxis: Quellen vergiftet (Quellen: Android Central / Washington Post, OECD AI Incidents, 2025) -->
@@ -84,8 +84,8 @@
     <p class="step-no">📰 aus der praxis</p>
     <h2 id="sb-note2-h">Die falsche Hotline aus der KI-Suche</h2>
     <p>2025 fluteten Betrüger Foren und Bewertungsseiten mit falschen Kundenservice-Nummern großer Firmen, zum Beispiel von Kreuzfahrtreedereien. Googles KI-Zusammenfassungen (AI Overviews) übernahmen die Nummern und zeigten sie als offizielle Hotline an. Ein Kunde rief die angebliche Nummer von Royal Caribbean an, nannte seine Kreditkartendaten und hatte binnen 24 Stunden betrügerische Abbuchungen. In Indien verlor ein 65-Jähriger auf diesem Weg über 3.000 Dollar.</p>
-    <p>Vergiftet wurde hier nicht das Training, sondern die Quellen, aus denen die KI beim Antworten liest. Das Prinzip ist dasselbe wie im Spiel: Genug unauffällige, falsch beschriftete Beiträge, und die KI hält das Falsche für richtig.</p>
-    <p><b>Was heißt das fürs Testen?</b> Die Datenquellen eines KI-Systems gehören mit in den Test: Woher kommen sie, wer kann sie verändern, und merkt das System, wenn sie der offiziellen Quelle widersprechen?</p>
+    <p>Vergiftet wurde hier nicht das Training, sondern die Quellen, aus denen die KI beim Antworten liest. Das Prinzip ist dasselbe wie im Spiel: Wenn genug unauffällige Beiträge das Falsche behaupten, hält die KI es für richtig.</p>
+    <p><b>Fürs Testen</b> bedeutet das, dass die Datenquellen eines KI-Systems mit in den Test gehören. Woher kommen sie, wer kann sie verändern, und merkt das System, wenn sie der offiziellen Quelle widersprechen?</p>
     <p class="small c-muted">Quellen: <a href="https://www.androidcentral.com/apps-software/ai/google-ai-overviews-led-users-astray-some-phone-numbers-are-scams-report" rel="noopener">Android Central</a> · <a href="https://oecd.ai/en/incidents/2025-08-18-87c0" rel="noopener">OECD AI Incidents</a></p>
   </aside>
   </div>
